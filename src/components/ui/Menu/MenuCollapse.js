@@ -24,7 +24,7 @@ const MenuCollapse = (props) => {
         if (expanded !== isExpanded) {
             setIsExpanded(true)
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line   
     }, [expanded, onToggle, eventKey, defaultExpandedKeys])
 
     const toggleCollapse = (e) => {

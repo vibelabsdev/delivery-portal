@@ -19,7 +19,7 @@ function useDarkMode() {
         const root = window.document.documentElement
         root.classList.remove(isEnabled ? MODE_LIGHT : MODE_DARK)
         root.classList.add(isEnabled ? MODE_DARK : MODE_LIGHT)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line   
     }, [isEnabled])
 
     return [isEnabled, onModeChange]

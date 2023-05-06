@@ -107,7 +107,7 @@ const DatePicker = forwardRef((props, ref) => {
                 capitalize(dayjs(value).locale(finalLocale).format(dateFormat))
             )
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line   
     }, [value, focused, themeLocale])
 
     useEffect(() => {
@@ -116,7 +116,7 @@ const DatePicker = forwardRef((props, ref) => {
                 capitalize(dayjs(_value).locale(finalLocale).format(dateFormat))
             )
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line   
     }, [themeLocale])
 
     const handleValueChange = (date) => {

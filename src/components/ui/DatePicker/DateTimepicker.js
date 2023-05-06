@@ -104,7 +104,7 @@ const DateTimepicker = forwardRef((props, ref) => {
         if (value instanceof Date && !focused) {
             setInputState(dayjs(value).locale(finalLocale).format(dateFormat))
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line   
     }, [value, focused])
 
     const handleValueChange = (date) => {

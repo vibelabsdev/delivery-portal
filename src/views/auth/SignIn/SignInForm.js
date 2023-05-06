@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
     Input,
     Button,
@@ -12,9 +12,11 @@ import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import useAuth from 'utils/hooks/useAuth'
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from 'react'
 
 const validationSchema = Yup.object().shape({
-    userName: Yup.string().required('Please enter your user name'),
+    phone: Yup.string().required('Please enter your phone'),
     password: Yup.string().required('Please enter your password'),
     rememberMe: Yup.bool(),
 })
@@ -28,15 +30,21 @@ const SignInForm = (props) => {
     } = props
 
     const [message, setMessage] = useTimeOutMessage()
+    const dispatch = useDispatch();
+
+    const [ dataRes, setDataRes ] = useState([])
 
     const { signIn } = useAuth()
 
     const onSignIn = async (values, setSubmitting) => {
-        const { userName, password } = values
-        setSubmitting(true)
-
-        const result = await signIn({ userName, password })
-
+        const { phone, password } = values
+        setSubmitting(true)     
+        console.log('-------signin has click----', values)
+        
+        // const result = await authLogin(values)
+        // console.log('---result--', result)
+        const result = await signIn({ phone, password })
+        console.log('---result--', result)
         if (result.status === 'failed') {
             setMessage(result.message)
         }
@@ -54,8 +62,8 @@ const SignInForm = (props) => {
             <Formik
                 // Remove this initial value
                 initialValues={{
-                    userName: 'admin',
-                    password: '123Qwe',
+                    phone: '0976517102',
+                    password: '1234567',
                     rememberMe: true,
                 }}
                 validationSchema={validationSchema}
@@ -71,15 +79,15 @@ const SignInForm = (props) => {
                     <Form>
                         <FormContainer>
                             <FormItem
-                                label="User Name"
-                                invalid={errors.userName && touched.userName}
-                                errorMessage={errors.userName}
+                                label="Phone"
+                                invalid={errors.phone && touched.phone}
+                                errorMessage={errors.phone}
                             >
                                 <Field
-                                    type="text"
+                                    type="string"
                                     autoComplete="off"
-                                    name="userName"
-                                    placeholder="User Name"
+                                    name="phone"
+                                    placeholder="Phone"
                                     component={Input}
                                 />
                             </FormItem>

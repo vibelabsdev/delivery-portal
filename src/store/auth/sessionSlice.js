@@ -8,6 +8,8 @@ export const sessionSlice = createSlice({
     },
     reducers: {
         onSignInSuccess: (state, action) => {
+            console.log('-------state-----', state)
+            console.log('-------action-----', action)
             state.signedIn = true
             state.token = action.payload
         },

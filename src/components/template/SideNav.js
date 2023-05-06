@@ -75,6 +75,8 @@ const SideNav = () => {
         />
     )
 
+    console.log('-----menu-content---', menuContent)
+
     return (
         <>
             {larger.md && (

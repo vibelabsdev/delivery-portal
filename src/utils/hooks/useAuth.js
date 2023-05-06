@@ -6,6 +6,9 @@ import appConfig from 'configs/app.config'
 import { REDIRECT_URL_KEY } from 'constants/app.constant'
 import { useNavigate } from 'react-router-dom'
 import useQuery from './useQuery'
+import { authService } from 'services'
+import jwt from 'jwt-decode'
+import { LocalStorageService } from 'helpers'
 
 function useAuth() {
     const dispatch = useDispatch()
@@ -18,16 +21,26 @@ function useAuth() {
 
     const signIn = async (values) => {
         try {
-            const resp = await apiSignIn(values)
-            if (resp.data) {
+            // const resp = await apiSignIn(values)
+            const response = await authService.login(values)
+            const resp = await response.json();
+            console.log('----resp----', resp)
+            if (resp.status === 1) {
                 const { token } = resp.data
                 dispatch(onSignInSuccess(token))
-                if (resp.data.user) {
+                console.log('------resp-data---', resp.data)
+                LocalStorageService.setToken(resp.data)
+                const user = jwt(token);
+                console.log('-------user-------', user)
+                if (user) {
                     dispatch(
                         setUser(
-                            resp.data.user || {
+                            user || {
                                 avatar: '',
-                                userName: 'Anonymous',
+                                name: 'Anonymous',
+                                phone: '',
+                                store_id: '',
+                                permission: 'admin',
                                 authority: ['USER'],
                                 email: '',
                             }
@@ -35,12 +48,19 @@ function useAuth() {
                     )
                 }
                 const redirectUrl = query.get(REDIRECT_URL_KEY)
-                navigate(
+                console.log('--------redirectUrl-----', redirectUrl)
+                navigate(   
                     redirectUrl ? redirectUrl : appConfig.authenticatedEntryPath
                 )
                 return {
                     status: 'success',
                     message: '',
+                }
+
+            } else {
+                return {
+                    status: 'failed',
+                    message: 'Invalid phone number or password' || resp?.msg,
                 }
             }
         } catch (errors) {
@@ -93,8 +113,12 @@ function useAuth() {
     }
 
     const signOut = async () => {
-        await apiSignOut()
-        handleSignOut()
+        // await apiSignOut()
+        const response = await authService.logout()
+        const resp = await response.json();
+        if (resp.data === true) {
+            handleSignOut()
+        }
     }
 
     return {

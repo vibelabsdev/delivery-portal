@@ -35,7 +35,7 @@ const VerticalMenuContent = (props) => {
         if (defaulExpandKey.length === 0 && activedRoute?.parentKey) {
             setDefaulExpandKey([activedRoute?.parentKey])
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line
     }, [activedRoute?.parentKey])
 
     const handleLinkClick = () => {
