@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import classNames from 'classnames'
 import { ScrollBar } from 'components/ui'
 import PropTypes from 'prop-types'
@@ -16,6 +16,7 @@ import navigationConfig from 'configs/navigation.config'
 import VerticalMenuContent from 'components/template/VerticalMenuContent'
 import useResponsive from 'utils/hooks/useResponsive'
 import { useSelector } from 'react-redux'
+
 
 const sideNavStyle = {
     width: SIDE_NAV_WIDTH,
@@ -41,6 +42,7 @@ const SideNav = () => {
     const sideNavCollapse = useSelector(
         (state) => state.theme.layout.sideNavCollapse
     )
+    console.log('-----sideNavCollapse------', sideNavCollapse)
     const userAuthority = useSelector((state) => state.auth.user.authority)
 
     const { larger } = useResponsive()

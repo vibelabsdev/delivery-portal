@@ -25,6 +25,8 @@ const VerticalMenuContent = (props) => {
         direction = themeConfig.direction,
     } = props
 
+    console.log('------navigationTree------', navigationTree)
+
     const { t } = useTranslation()
 
     const [defaulExpandKey, setDefaulExpandKey] = useState([])

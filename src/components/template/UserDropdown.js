@@ -21,7 +21,7 @@ export const UserDropdown = ({ className }) => {
             <Avatar size={32} shape="circle" icon={<HiOutlineUser />} />
             <div className="hidden md:block">
                 <div className="text-xs capitalize">admin</div>
-                <div className="font-bold">{userInfo.payload.name}</div>
+                <div className="font-bold">{userInfo?.payload?.name}</div>
             </div>
         </div>
     )
@@ -38,9 +38,9 @@ export const UserDropdown = ({ className }) => {
                         <Avatar shape="circle" icon={<HiOutlineUser />} />
                         <div>
                             <div className="font-bold text-gray-900 dark:text-gray-100">
-                                {userInfo.payload.name}
+                                {userInfo?.payload?.name}
                             </div>
-                            <div className="text-xs">{userInfo.payload.email}</div>
+                            <div className="text-xs">{userInfo?.payload?.email}</div>
                         </div>
                     </div>
                 </Dropdown.Item>
