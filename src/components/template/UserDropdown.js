@@ -12,7 +12,6 @@ const dropdownItemList = []
 export const UserDropdown = ({ className }) => {
     // bind this
     const userInfo = useSelector((state) => state.auth.user)
-    console.log('-----user_info---', userInfo)
 
     const { signOut } = useAuth()
 

@@ -7,7 +7,7 @@ export const protectedRoutes = [
     {
         key: 'home',
         path: '/home',
-        component: React.lazy(() => import('views')),
+        component: React.lazy(() => import('views/Home')),
         authority: [],
     },
     /** Example purpose only, please remove */
@@ -50,6 +50,14 @@ export const protectedRoutes = [
         path: '/group-collapse-menu-item-view-2',
         component: React.lazy(() =>
             import('views/demo/GroupCollapseMenuItemView2')
+        ),
+        authority: [],
+    },
+    {
+        key: 'menu.stores',
+        path: '/delivery-store',
+        component: React.lazy(() =>
+            import('views/store')
         ),
         authority: [],
     },

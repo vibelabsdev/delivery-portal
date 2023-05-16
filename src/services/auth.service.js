@@ -1,5 +1,4 @@
 import { LocalStorageService } from "helpers";
-import axiosClient from "./client_axios";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 const route = "/delivery-service/user";

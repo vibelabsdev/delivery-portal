@@ -115,7 +115,9 @@ function useAuth() {
     const signOut = async () => {
         // await apiSignOut()
         const response = await authService.logout()
+        
         const resp = await response.json();
+        // console.log('----response signOut-----', resp)
         if (resp.data === true) {
             handleSignOut()
         }

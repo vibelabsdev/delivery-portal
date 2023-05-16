@@ -1,11 +1,14 @@
 {
     "nav": {
         "home": "Home",
-        "singleMenuItem": "Single menu item",
+        "singleMenuItem": "Stores",
         "collapseMenu": {
-            "collapseMenu": "List Stores",
-            "item1": "Collapse menu item 1",
-            "item2": "Collapse menu item 2"
+            "collapseMenu": "Danh Sách Đơn Hàng",
+            "item1": "Chờ giao",
+            "item2": "Đang giao",
+            "item3": "Giao thành công",
+            "item4": "Giao thất bại",
+            "item5": "Đơn đã huỷ"
         },
         "groupMenu": {
             "groupMenu": "Group menu",

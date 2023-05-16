@@ -41,3 +41,11 @@ export async function apiResetPassword(data) {
         data,
     })
 }
+
+export async function apiListStore() {
+    return ApiService.fetchData({
+        url: '/delivery-service/store/stores',
+        method: 'get'
+    })
+}
+

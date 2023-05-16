@@ -5,6 +5,7 @@ import { PERSIST_STORE_NAME } from 'constants/app.constant'
 import deepParseJson from 'utils/deepParseJson'
 import store from '../store'
 import { onSignOutSuccess } from '../store/auth/sessionSlice'
+import { LocalStorageService } from 'helpers'
 
 const unauthorizedCode = [401]
 
@@ -18,7 +19,8 @@ BaseService.interceptors.request.use(
         const rawPersistData = localStorage.getItem(PERSIST_STORE_NAME)
         const persistData = deepParseJson(rawPersistData)
 
-        let accessToken = persistData.auth.session.token
+        // let accessToken = persistData.auth.session.token
+        const accessToken = LocalStorageService.getAccessToken()
 
         if (!accessToken) {
             const { auth } = store.getState()
@@ -30,7 +32,7 @@ BaseService.interceptors.request.use(
                 REQUEST_HEADER_AUTH_KEY
             ] = `${TOKEN_TYPE}${accessToken}`
         }
-
+        console.log('------config-----', config)
         return config
     },
     (error) => {

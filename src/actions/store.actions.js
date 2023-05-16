@@ -1,9 +1,14 @@
+
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { StoreService } from "services/store.service";
+
 
 export const fetchListStore = createAsyncThunk(
-    'delivery/list-store',
-    async (params, { dispatch, getState }) => {
-        const response = await NFTService.getChainSupport(params)
+    'store/list_store',
+    async (params) => {
+        const response = await StoreService.getListStores({
+            params
+        })
         return response.data
     }
 )

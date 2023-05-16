@@ -42,7 +42,6 @@ const SideNav = () => {
     const sideNavCollapse = useSelector(
         (state) => state.theme.layout.sideNavCollapse
     )
-    console.log('-----sideNavCollapse------', sideNavCollapse)
     const userAuthority = useSelector((state) => state.auth.user.authority)
 
     const { larger } = useResponsive()
@@ -76,8 +75,6 @@ const SideNav = () => {
             direction={direction}
         />
     )
-
-    console.log('-----menu-content---', menuContent)
 
     return (
         <>

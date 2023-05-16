@@ -25,7 +25,7 @@ const VerticalMenuContent = (props) => {
         direction = themeConfig.direction,
     } = props
 
-    console.log('------navigationTree------', navigationTree)
+    // console.log('------navigationTree------', navigationTree)
 
     const { t } = useTranslation()
 

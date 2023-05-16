@@ -1,45 +1,37 @@
-import { fetchListCHAINS } from "@/actions/nftActions"
-import { createSlice } from "@reduxjs/toolkit"
-import { RootState } from "./rootReducer"
+// import { createSlice } from "@reduxjs/toolkit"
+// import { fetchListStore } from "actions/store.actions"
 
+// const initialState = {
+//     loading: false,
+//     items: [],
+//     num_of_page: 0
+// }
 
-const initialState = {
-    loading: false,
-    items: [],
-    itemKeyTypes: [],
-    num_of_page: 0
-}
+// console.log('------store slice has work-----')
+// console.log('----initialState----', initialState)
 
-const storeSlice = createSlice({
-  name: "store",
-  initialState,
-  reducers: {
-    save(state, action) {
-      const { value, key } = action.payload
-      state[key] = value
-    }
-  },
-  extraReducers: (builder) => {
-    builder
-      /**
-       * * fetchReviewVideo
-       */
-      .addCase(fetchListCHAINS.pending, (state, action) => {
-        state.loading = true
-      })
-      .addCase(fetchListCHAINS.fulfilled, (state, action) => {
-        state.loading = false
-        state.items = action.payload.items
-        state.itemKeyTypes = getItemKeys(action.payload.items)
-      })
-      .addCase(fetchListCHAINS.rejected, (state, action) => {
-        state.loading = false
-      })
-  }
-})
+// const storeSlice = createSlice({
+//   name: "store",
+//   initialState,
+//   reducers: {},
+//   extraReducers: (builder) =>
+//       builder
+//         .addCase(fetchListStore.pending, (state, action) => {
+//           console.log('-------hello--pending-')
+//           state.loading = true
+//         })
+//         .addCase(fetchListStore.fulfilled, (state, action) => {
+//           console.log('-------hello--pending-')
+//           state.items = action.payload.items;
+//           state.loading = false
+//         })
+//         .addCase(fetchListStore.rejected, (state, action) => {
+//           state.items = [];
+//           state.loading = false
+//         }),
+// })
 
-export default storeSlice.reducer
+// export default storeSlice.reducer
 
-// export const {} = videoSlice.actions
-
-export const selectListChainNFT = (state) => state.store.items || [];
+// // export const { } = storeSlice.actions;
+// export const selectListStores = (state) => state.store || [];
