@@ -47,7 +47,7 @@ const navigationConfig = [
         subMenu: [
             {
                 key: 'collapseMenu.item1',
-                path: '/collapse-menu-item-view-1',
+                path: '/delivery-order/await',
                 title: 'Collapse menu item 1',
                 translateKey: 'nav.collapseMenu.item1',
                 icon: '',
@@ -57,7 +57,7 @@ const navigationConfig = [
             },
             {
                 key: 'collapseMenu.item2',
-                path: '/collapse-menu-item-view-2',
+                path: '/delivery-order/delivering',
                 title: 'Collapse menu item 2',
                 translateKey: 'nav.collapseMenu.item2',
                 icon: '',
@@ -67,7 +67,7 @@ const navigationConfig = [
             },
             {
                 key: 'collapseMenu.item3',
-                path: '/collapse-menu-item-view-2',
+                path: '/delivery-order/success',
                 title: 'Collapse menu item 2',
                 translateKey: 'nav.collapseMenu.item3',
                 icon: '',
@@ -77,7 +77,7 @@ const navigationConfig = [
             },
             {
                 key: 'collapseMenu.item4',
-                path: '/collapse-menu-item-view-2',
+                path: '/delivery-order/fail',
                 title: 'Collapse menu item 2',
                 translateKey: 'nav.collapseMenu.item4',
                 icon: '',
@@ -87,7 +87,7 @@ const navigationConfig = [
             },
             {
                 key: 'collapseMenu.item5',
-                path: '/collapse-menu-item-view-2',
+                path: '/delivery-order/cancel',
                 title: 'Collapse menu item 2',
                 translateKey: 'nav.collapseMenu.item5',
                 icon: '',
