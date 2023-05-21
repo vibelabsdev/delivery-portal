@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { fetchListOrderByStatus } from "actions/order.actions"
 import { fetchListStore } from "actions/store.actions"
 
 export const initialTableData = {
@@ -25,20 +26,18 @@ export const initialFilterData = {
 //     num_of_page: 0
 // }
 
-console.log('------store slice has work-----')
-// console.log('----initialState----', initialState)
 
-const storeSlice = createSlice({
-  name: "store",
+const orderSlice = createSlice({
+  name: "order",
   initialState: {
       loading: false,
-      storeLists: [],
+      orderLists: [],
       tableData: initialTableData,
       filterData: initialFilterData,
   },
   reducers: {
-    updateStoreList: (state, action) => {
-      state.storeLists = action.payload
+    updateOrderList: (state, action) => {
+      state.orderLists = action.payload
     },
     setTableData: (state, action) => {
         state.tableData = action.payload
@@ -49,30 +48,30 @@ const storeSlice = createSlice({
   },
   extraReducers: (builder) =>
       builder
-        .addCase(fetchListStore.pending, (state, action) => {
+        .addCase(fetchListOrderByStatus.pending, (state, action) => {
           state.loading = true
         })
-        .addCase(fetchListStore.fulfilled, (state, action) => {
-          state.storeLists = action.payload.stores;
+        .addCase(fetchListOrderByStatus.fulfilled, (state, action) => {
+          state.orderLists = action.payload.orders;
           state.tableData.total = action.payload.store_total;
           state.loading = false
         })
-        .addCase(fetchListStore.rejected, (state, action) => {
-          state.storeLists = [];
+        .addCase(fetchListOrderByStatus.rejected, (state, action) => {
+          state.orderLists = [];
           state.loading = false
         }),
 })
 
-export default storeSlice.reducer
+export default orderSlice.reducer
 
 export const {
-  updateStoreList,
+  updateOrderList,
   setTableData,
   setFilterData,
-} = storeSlice.actions
+} = orderSlice.actions
 
 
-export const selectListStores = (state) => state.store.storeLists || [];
-export const selectTableData = (state) => state.store.tableData || [];
-export const selectFilterData = (state) => state.store.filterData || [];
-export const selectListStoresStatus = (state) => state.store.loading || false;
+export const selectListOrders = (state) => state.order.orderLists || [];
+export const selectTableData = (state) => state.order.tableData || [];
+export const selectFilterData = (state) => state.order.filterData || [];
+export const selectListOrderStatus = (state) => state.order.loading || false;

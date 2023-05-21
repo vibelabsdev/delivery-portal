@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react'
 import { AdaptableCard } from 'components/shared'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchListOrderByStatus } from 'actions/order.actions'
+import { selectListOrders } from 'store/delivery_order/orderSlice'
+import OrderTable from './components/OrderTable'
 
 
 
@@ -9,26 +13,26 @@ const OrderList = () => {
     const status = location.pathname.substring(
         location.pathname.lastIndexOf('/') + 1
     )
-
-    console.log('----status-------', status)
+    
+    const dispatch = useDispatch()
+    
     useEffect(() => {
-        fetchData()
-    }, [])
-
-    const fetchData = async () => {
+        fetchOrders()
         
-        console.log('----status-------', status)
-        if (status) {
-            
-        }
+    }, [status])
+
+    const fetchOrders = async () => {
+        await dispatch(fetchListOrderByStatus({ offset: 0, limit: 5, status: status }))
     }
+
+    const orderData = useSelector(selectListOrders)
 
     return (
         <AdaptableCard className="h-full" bodyClass="h-full">
             <div className="lg:flex items-center justify-between mb-4">
                 <h3 className="mb-4 lg:mb-0">Orders</h3>
             </div>
-            {/* <StoreTable /> */}
+            <OrderTable status = {status} />
         </AdaptableCard>
     )
 }

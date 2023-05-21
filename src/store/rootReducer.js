@@ -4,6 +4,7 @@ import auth from './auth'
 import base from './base'
 import locale from './locale/localeSlice'
 import store from './delivery_store/storeSlice'
+import order from './delivery_order/orderSlice'
 
 const rootReducer = (asyncReducers) => (state, action) => {
     const combinedReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = (asyncReducers) => (state, action) => {
         base,
         locale,
         store,
+        order,
         ...asyncReducers,
     })
     return combinedReducer(state, action)
