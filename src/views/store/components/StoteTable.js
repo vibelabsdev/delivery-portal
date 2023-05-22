@@ -16,7 +16,7 @@ const inventoryStatusColor = {
         dotClass: 'bg-emerald-500',
         textClass: 'text-emerald-500',
     },
-    'block': {
+    'blocked': {
         label: 'Out of Stock',
         dotClass: 'bg-red-500',
         textClass: 'text-red-500',
