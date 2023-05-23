@@ -16,7 +16,6 @@ export const fetchListStore = createAsyncThunk(
 export const actionCreateStore = async (dataReq) => {
 
     const response = await StoreService.createStores(dataReq)
-    console.log('----response----', response)
     return response
 }
 

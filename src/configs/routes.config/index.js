@@ -73,4 +73,10 @@ export const protectedRoutes = [
         component: React.lazy(() => import('views/create-store')),
         authority: [],
     },
+    {
+        key: 'menu.user-create',
+        path: `/delivery-user/create`,
+        component: React.lazy(() => import('views/user')),
+        authority: [],
+    },
 ]

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react'
 import { Avatar, Badge } from 'components/ui'
-import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
+import { HiOutlinePencil, HiOutlineTrash, HiOutlineUserAdd } from 'react-icons/hi'
 import { FiPackage } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
 import useThemeClass from 'utils/hooks/useThemeClass'
@@ -17,7 +17,7 @@ const inventoryStatusColor = {
         textClass: 'text-emerald-500',
     },
     'blocked': {
-        label: 'Out of Stock',
+        label: 'blocked',
         dotClass: 'bg-red-500',
         textClass: 'text-red-500',
     },
@@ -37,8 +37,19 @@ const ActionColumn = ({ row }) => {
         dispatch(setSelectedProduct(row.id))
     }
 
+    const onCreate = () => {
+        console.log('---onCreate has work----', row)
+        navigate(`/delivery-user/create`, { state: {store_name: row.name, store_id: row._id} })
+    }
+    
     return (
         <div className="flex justify-end text-lg">
+            <span
+                className={`cursor-pointer p-2 hover:${textTheme}`}
+                onClick={onCreate}
+            >
+                <HiOutlineUserAdd />
+            </span>
             <span
                 className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={onEdit}
