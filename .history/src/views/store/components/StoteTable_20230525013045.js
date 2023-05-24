@@ -127,7 +127,7 @@ const StoreTable = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'Tên cửa hàng',
+                header: 'Name',
                 accessorKey: 'name',
                 cell: (props) => {
                     const row = props.row.original
@@ -135,17 +135,17 @@ const StoreTable = () => {
                 },
             },
             {
-                header: 'Số điện thoại',
+                header: 'Phone',
                 accessorKey: 'phone',
                 sortable: true,
             },
             {
-                header: 'Địa chỉ',
+                header: 'Address',
                 accessorKey: 'address',
                 sortable: true,
             },
             {
-                header: 'Trạng thái',
+                header: 'Status',
                 accessorKey: 'status',
                 cell: (props) => {
                     const { status } = props.row.original
@@ -166,7 +166,7 @@ const StoreTable = () => {
                 },
             },
             {
-                header: 'Thời gian khởi tạo',
+                header: 'Created Time',
                 accessorKey: 'created_time',
                 cell: (props) => {
                     const { created_time } = props.row.original;

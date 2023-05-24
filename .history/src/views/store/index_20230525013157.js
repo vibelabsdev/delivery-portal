@@ -29,7 +29,7 @@ const StoreList = () => {
           className="cursor-pointer block transform transition-colors duration-200 py-2 hover:text-gray-900 dark:hover:text-gray-100"
           to="/delivery-store/create"
         >
-          Tạo cửa hàng{" "}
+          Create Store{" "}
         </Link>{" "}
       </div>{" "}
       <StoreTable />

@@ -16,7 +16,7 @@ const options = [
 function validateEmail(value) {
     let error
     if (!value) {
-        error = 'Thông tin bắt buộc!'
+        error = 'Required'
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
         error = 'Địa chỉ email không đúng định dạng!'
     }
@@ -26,7 +26,6 @@ function validateEmail(value) {
 const validationSchema = Yup.object().shape({
     name: Yup.string().required('Họ và Tên không được bỏ trống!'),
     phone: Yup.string().required('Số điện thoại không được bỏ trống!'),
-    email: Yup.string().required('Địa chỉ email không được bỏ trống!'),
     address: Yup.string().required('Địa chỉ không được bỏ trống!'),
     status: Yup.string().required('Vui lòng chọn trạng thái!'),
     permission: Yup.string().required('Vui lòng chọn quyền!'),
@@ -108,7 +107,7 @@ const UserRegisForm = ({state}) => {
                     <Form>
                         <FormContainer>
                             <FormItem
-                                label="Họ và Tên"
+                                label="Name"
                                 invalid={errors.name && touched.name}
                                 errorMessage={errors.name}
                             >
@@ -116,12 +115,12 @@ const UserRegisForm = ({state}) => {
                                     type="text"
                                     autoComplete="off"
                                     name="name"
-                                    placeholder="Vui lòng nhập Họ và Tên"
+                                    placeholder="Name"
                                     component={Input}
                                 />
                             </FormItem>
                             <FormItem
-                                label="Số điện thoại"
+                                label="Phone"
                                 invalid={errors.phone && touched.phone}
                                 errorMessage={errors.phone}
                             >
@@ -129,25 +128,25 @@ const UserRegisForm = ({state}) => {
                                     type="number"
                                     autoComplete="off"
                                     name="phone"
-                                    placeholder="Vui lòng nhập Số điện thoại"
+                                    placeholder="Phone"
                                     component={Input}
                                 />
                             </FormItem>
                             <FormItem
-                                label="Địa chỉ email"
+                                label="Email"
                                 invalid={errors.email && touched.email}
                                 errorMessage={errors.email}
                             >
                                 <Field
                                     type="email"
                                     name="email"
-                                    placeholder="Vui lòng nhập Địa chỉ email"
+                                    placeholder="Email"
                                     component={Input}
                                     validate={validateEmail}
                                 />
                             </FormItem>
                             <FormItem
-                                label="Địa chỉ"
+                                label="Address"
                                 invalid={errors.phone && touched.phone}
                                 errorMessage={errors.address}
                             >
@@ -155,7 +154,7 @@ const UserRegisForm = ({state}) => {
                                     type="text"
                                     autoComplete="off"
                                     name="address"
-                                    placeholder="Vui lòng nhập địa chỉ"
+                                    placeholder="Address"
                                     component={Input}
                                 />
                             </FormItem>
@@ -176,14 +175,14 @@ const UserRegisForm = ({state}) => {
                                                 )
                                             }
                                         >
-                                            <Radio value={'active'}>Hoạt động</Radio>
-                                            <Radio value={'blocked'}>Tạm khoá</Radio>
+                                            <Radio value={'active'}>Active</Radio>
+                                            <Radio value={'blocked'}>Blocked</Radio>
                                         </Radio.Group>
                                     )}
                                 </Field>
                             </FormItem>
                             <FormItem
-                                label="Phân quyền"
+                                label="Permission"
                                 asterisk
                                 invalid={errors.select && touched.select}
                                 errorMessage={errors.select}
@@ -210,7 +209,7 @@ const UserRegisForm = ({state}) => {
                                 </Field>
                             </FormItem>
                             <FormItem
-                                label="Mật khẩu"
+                                label="Password"
                                 invalid={errors.password && touched.password}
                                 errorMessage={errors.password}
                             >
@@ -219,12 +218,12 @@ const UserRegisForm = ({state}) => {
                                     suffix={passwordVisible}
                                     autoComplete="off"
                                     name="password"
-                                    placeholder="Vui lòng nhập Mật khẩu"
+                                    placeholder="Password"
                                     component={Input}
                                 />
                             </FormItem>
                             <FormItem
-                                label="Xác nhận mật khẩu"
+                                label="Password"
                                 invalid={
                                     errors.confirmPassword &&
                                     touched.confirmPassword
@@ -236,21 +235,21 @@ const UserRegisForm = ({state}) => {
                                     suffix={passwordVisible}
                                     autoComplete="off"
                                     name="confirmPassword"
-                                    placeholder="Vui lòng xác nhận lại mật khẩu"
+                                    placeholder="Confirm Password"
                                     component={Input}
                                 />
                             </FormItem>
                             <FormItem>
                                 <div className="flex gap-2">
                                     <Button type="reset" onClick={resetForm}>
-                                        Điền lại
+                                        Reset
                                     </Button>
                                     <Button
                                         variant="solid"
                                         type="submit"
                                         loading={isSubmitting}
                                     >
-                                        Đăng ký
+                                        Register
                                     </Button>
                                 </div>
                             </FormItem>

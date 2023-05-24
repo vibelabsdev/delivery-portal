@@ -24,13 +24,13 @@ const StoreList = () => {
     <AdaptableCard className="h-full" bodyClass="h-full">
       <div className="lg:flex items-center justify-between mb-4">
         <h3 className="mb-4 lg:mb-0"> Danh sách cửa hàng </h3>{" "}
-        <Link
+        <button><Link
           // activeClass="text-gray-900 dark:text-gray-50"
           className="cursor-pointer block transform transition-colors duration-200 py-2 hover:text-gray-900 dark:hover:text-gray-100"
           to="/delivery-store/create"
         >
           Tạo cửa hàng{" "}
-        </Link>{" "}
+        </Link>{" "}</button>
       </div>{" "}
       <StoreTable />
     </AdaptableCard>
