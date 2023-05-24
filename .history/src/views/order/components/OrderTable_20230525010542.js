@@ -10,7 +10,7 @@ import { DataTable } from 'components/shared'
 import { fetchListStore } from 'actions/store.actions'
 import { selectFilterData, selectListOrderStatus, selectListOrders, selectTableData, setTableData } from 'store/delivery_order/orderSlice'
 import { fetchListOrderByStatus } from 'actions/order.actions'
-import {format} from 'date-fns'
+import {format} from 'day-fns'
 
 const inventoryStatusColor = {
     'success': {
@@ -186,11 +186,11 @@ const OrderTable = ({status}) => {
             {
                 header: 'Created Time',
                 accessorKey: 'created_time',
-                cell: (props) => {
-                    const { created_time } = props.row.original;
-                    const formattedDateTime = format(new Date(created_time * 1000), 'dd/MM/yyyy HH:mm:ss');
-                    return <span>{formattedDateTime}</span>
-                },
+                // cell: (props) => {
+                //     const { price } = props.row.original
+                //     return <span>${price}</span>
+                // },
+                accessorKey: 'created_time',
                 sortable: true,
             },
             {

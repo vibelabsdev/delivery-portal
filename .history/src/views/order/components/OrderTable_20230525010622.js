@@ -10,7 +10,7 @@ import { DataTable } from 'components/shared'
 import { fetchListStore } from 'actions/store.actions'
 import { selectFilterData, selectListOrderStatus, selectListOrders, selectTableData, setTableData } from 'store/delivery_order/orderSlice'
 import { fetchListOrderByStatus } from 'actions/order.actions'
-import {format} from 'date-fns'
+import {format} from 'day-fns'
 
 const inventoryStatusColor = {
     'success': {

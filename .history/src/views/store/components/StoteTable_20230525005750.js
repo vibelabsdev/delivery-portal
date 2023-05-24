@@ -1,45 +1,23 @@
 import React, { useEffect, useMemo, useRef } from 'react'
 import { Avatar, Badge } from 'components/ui'
-import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
+import { HiOutlinePencil, HiOutlineTrash, HiOutlineUserAdd } from 'react-icons/hi'
 import { FiPackage } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
 import useThemeClass from 'utils/hooks/useThemeClass'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
+import { selectFilterData, selectListStores, selectListStoresStatus, selectTableData, setTableData } from 'store/delivery_store/storeSlice'
 import { DataTable } from 'components/shared'
 import { fetchListStore } from 'actions/store.actions'
-import { selectFilterData, selectListOrderStatus, selectListOrders, selectTableData, setTableData } from 'store/delivery_order/orderSlice'
-import { fetchListOrderByStatus } from 'actions/order.actions'
-import {format} from 'date-fns'
 
 const inventoryStatusColor = {
-    'success': {
-        label: 'giao thành công',
+    'active': {
+        label: 'Active',
         dotClass: 'bg-emerald-500',
         textClass: 'text-emerald-500',
     },
-    'wait': {
-        label: 'chưa giao',
-        dotClass: 'bg-red-500',
-        textClass: 'text-red-500',
-    },
-    'delivering': {
-        label: 'đang giao',
-        dotClass: 'bg-red-500',
-        textClass: 'text-red-500',
-    },
-    'fail': {
-        label: 'giao thất bại',
-        dotClass: 'bg-red-500',
-        textClass: 'text-red-500',
-    },
-    'partial_success': {
-        label: 'giao một phần',
-        dotClass: 'bg-red-500',
-        textClass: 'text-red-500',
-    },
-    'cancel': {
-        label: 'đã huỷ',
+    'blocked': {
+        label: 'blocked',
         dotClass: 'bg-red-500',
         textClass: 'text-red-500',
     },
@@ -59,8 +37,19 @@ const ActionColumn = ({ row }) => {
         dispatch(setSelectedProduct(row.id))
     }
 
+    const onCreate = () => {
+        console.log('---onCreate has work----', row)
+        navigate(`/delivery-user/create`, { state: {store_name: row.name, store_id: row._id} })
+    }
+    
     return (
         <div className="flex justify-end text-lg">
+            <span
+                className={`cursor-pointer p-2 hover:${textTheme}`}
+                onClick={onCreate}
+            >
+                <HiOutlineUserAdd />
+            </span>
             <span
                 className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={onEdit}
@@ -92,7 +81,7 @@ const ProductColumn = ({ row }) => {
     )
 }
 
-const OrderTable = ({status}) => {
+const StoreTable = () => {
 
     const tableRef = useRef(null)
 
@@ -103,14 +92,14 @@ const OrderTable = ({status}) => {
     //     (state) => state.salesProductList.data.filterData
     // )
     const filterData = useSelector(selectFilterData)
-    const loading = useSelector(selectListOrderStatus)
+    const loading = useSelector(selectListStoresStatus)
     
-    const data = useSelector(selectListOrders)
+    const data = useSelector(selectListStores)
 
     useEffect(() => {
         fetchData()
         // eslint-disable-next-line 
-    }, [pageIndex, pageSize, status])
+    }, [pageIndex, pageSize])
     // pageIndex, pageSize, sort
     useEffect(() => {
         if (tableRef) {
@@ -126,35 +115,27 @@ const OrderTable = ({status}) => {
     const fetchData = () => {
         const params = {
             offset : pageIndex*pageSize - pageSize,
-            limit : pageSize,
-            status: status
+            limit : pageSize
         }
         // const offset = pageIndex*pageSize - pageSize
         // const limit = pageSize
         // dispatch(fetchListStore({ offset, limit, sort, query, filterData }))
-        dispatch(fetchListOrderByStatus(params))
+        dispatch(fetchListStore(params))
     }
 
     const columns = useMemo(
         () => [
             {
                 header: 'Name',
-                accessorKey: 'cust_name',
-                sortable: true,
+                accessorKey: 'name',
+                cell: (props) => {
+                    const row = props.row.original
+                    return <ProductColumn row={row} />
+                },
             },
             {
                 header: 'Phone',
-                accessorKey: 'cust_phone',
-                sortable: true,
-            },
-            {
-                header: 'Fee ship',
-                accessorKey: 'fee_ship',
-                sortable: true,
-            },
-            {
-                header: 'Total amount',
-                accessorKey: 'total_amount',
+                accessorKey: 'phone',
                 sortable: true,
             },
             {
@@ -186,11 +167,11 @@ const OrderTable = ({status}) => {
             {
                 header: 'Created Time',
                 accessorKey: 'created_time',
-                cell: (props) => {
-                    const { created_time } = props.row.original;
-                    const formattedDateTime = format(new Date(created_time * 1000), 'dd/MM/yyyy HH:mm:ss');
-                    return <span>{formattedDateTime}</span>
-                },
+                // cell: (props) => {
+                //     const { price } = props.row.original
+                //     return <span>${price}</span>
+                // },
+                accessorKey: 'created_time',
                 sortable: true,
             },
             {
@@ -240,4 +221,4 @@ const OrderTable = ({status}) => {
     )
 }
 
-export default OrderTable
+export default StoreTable
