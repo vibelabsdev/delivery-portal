@@ -62,8 +62,8 @@ const SignInForm = (props) => {
             <Formik
                 // Remove this initial value
                 initialValues={{
-                    phone: '0976517102',
-                    password: '1234567',
+                    phone: '',
+                    password: '',
                     rememberMe: true,
                 }}
                 validationSchema={validationSchema}
