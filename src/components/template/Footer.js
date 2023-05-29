@@ -18,7 +18,7 @@ const FooterContent = () => {
                     href="/#"
                     onClick={(e) => e.preventDefault()}
                 >
-                    Term & Conditions
+                    Chính sách & Điều khoản
                 </a>
                 <span className="mx-2 text-muted"> | </span>
                 <a
@@ -26,7 +26,7 @@ const FooterContent = () => {
                     href="/#"
                     onClick={(e) => e.preventDefault()}
                 >
-                    Privacy & Policy
+                    Riêng tư & Bảo mật
                 </a>
             </div>
         </div>
