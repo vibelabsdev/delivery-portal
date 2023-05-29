@@ -8,9 +8,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
 import { actionRegisterUser } from 'actions/user.actions'
 
+
 const options = [
-    { value: 'ship', label: 'Ship' },
-    { value: 'admin', label: 'Admin' },
+    { value: 'store', label: 'Store' },
+
 ]
 
 function validateEmail(value) {
@@ -38,8 +39,10 @@ const validationSchema = Yup.object().shape({
 
 const UserRegisForm = ({state}) => {
 
-    const { store_name, store_id } = state; // Read values passed on state
-
+    const { store_name, store_id, store_code } = state; // Read values passed on state
+    console.log(store_id);
+    console.log(store_code);
+    console.log(store_name);
     const notify = () => toast("Đăng ký người dùng thành công!");
 
     const [pwInputType, setPwInputType] = useState('password')
@@ -48,6 +51,9 @@ const UserRegisForm = ({state}) => {
         e.preventDefault()
         setPwInputType(pwInputType === 'password' ? 'text' : 'password')
     }
+    console.log(store_id);
+    console.log(store_code);
+    console.log(store_name);
 
     const passwordVisible = (
         <span
@@ -70,9 +76,11 @@ const UserRegisForm = ({state}) => {
                 address: '',
                 status: 'active',
                 email: '',
-                permission: 'ship',
+                permission: 'store',
                 password: '',
-                confirmPassword: ''
+                confirmPassword: '',
+                store_code: '',
+            
             }}
             enableReinitialize
             validationSchema={validationSchema}
@@ -90,6 +98,7 @@ const UserRegisForm = ({state}) => {
                         address: values.address,
                         permission: values.permission,
                         status: values.status,
+                        store_code: store_code,
                     }
 
                     actionRegisterUser(dataReq)
@@ -97,6 +106,7 @@ const UserRegisForm = ({state}) => {
                     // if(result.data && result.data === true) {
                     //     notify()
                     // }
+                    
 
                     setSubmitting(false)
                     resetForm()
@@ -160,7 +170,7 @@ const UserRegisForm = ({state}) => {
                                 />
                             </FormItem>
                             <FormItem
-                                label="Status"
+                                label="Trạng thái"
                                 asterisk
                                 invalid={errors.status && touched.status}
                                 errorMessage={errors.status}
@@ -182,13 +192,12 @@ const UserRegisForm = ({state}) => {
                                     )}
                                 </Field>
                             </FormItem>
-                            <FormItem
+                            {/* <FormItem
                                 label="Phân quyền"
-                                asterisk
                                 invalid={errors.select && touched.select}
                                 errorMessage={errors.select}
-                            >
-                                <Field name="permission">
+                            > */}
+                                {/* <Field name="permission">
                                     {({ field, form }) => (
                                         <Select
                                             field={field}
@@ -207,8 +216,8 @@ const UserRegisForm = ({state}) => {
                                             }
                                         />
                                     )}
-                                </Field>
-                            </FormItem>
+                                </Field> */}
+                            {/* </FormItem> */}
                             <FormItem
                                 label="Mật khẩu"
                                 invalid={errors.password && touched.password}
@@ -243,7 +252,7 @@ const UserRegisForm = ({state}) => {
                             <FormItem>
                                 <div className="flex gap-2">
                                     <Button type="reset" onClick={resetForm}>
-                                        Điền lại
+                                        Nhập lại
                                     </Button>
                                     <Button
                                         variant="solid"
