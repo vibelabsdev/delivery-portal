@@ -140,7 +140,7 @@ const StoreTable = () => {
     // dispatch(fetchListStore({ offset, limit, sort, query, filterData }))
     dispatch(fetchListStore(params));
   };
-
+  console.log(tableData);
   const columns = useMemo(
     () => [
       {
