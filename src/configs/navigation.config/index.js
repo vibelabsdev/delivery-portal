@@ -8,7 +8,7 @@ const navigationConfig = [
     {
         key: 'home',
         path: '/home',
-        title: 'Home',
+        title: 'Trang chủ',
         translateKey: 'nav.home',
         icon: 'home',
         type: NAV_ITEM_TYPE_ITEM,
@@ -18,9 +18,9 @@ const navigationConfig = [
     {
         key: 'delivery_store',
         path: '/delivery-store',
-        title: 'Store list',
+        title: 'Danh Sách Cửa Hàng',
         translateKey: 'nav.delivery_store',
-        icon: 'singleMenu',
+        icon: 'collapseMenu',
         type: NAV_ITEM_TYPE_ITEM,
         authority: [],
         subMenu: [],
