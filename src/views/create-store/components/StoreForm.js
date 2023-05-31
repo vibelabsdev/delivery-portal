@@ -7,14 +7,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name Required'),
-    phone: Yup.string().required('Phone Required'),
-    address: Yup.string().required('Address Required'),
+    name: Yup.string().required('Tên cửa hàng không được bỏ trống!'),
+    phone: Yup.string().required('Số điện thoại không được bỏ trống!'),
+    address: Yup.string().required('Địa chỉ không được bỏ trống!'),
     radio: Yup.string().required('Please select one!'),
 })
 
 const StoreFormValidation = () => {
-    const notify = () => toast("Store Register Successfully!");
+    const notify = () => toast("Tạo cửa hàng thành công!");
 
     return (
         <Formik
@@ -33,6 +33,9 @@ const StoreFormValidation = () => {
                     
                     values['phone'] = '0' + values['phone'].toString()
                     actionCreateStore(values)
+                    .then (() => {
+                        notify()
+                    })
                     // console.log('------resul-----', result)
                     // if(result.data && result.data === true) {
                     //     notify()
@@ -48,7 +51,7 @@ const StoreFormValidation = () => {
                     <Form>
                         <FormContainer>
                             <FormItem
-                                label="Store Name"
+                                label="Tên cửa hàng"
                                 invalid={errors.name && touched.name}
                                 errorMessage={errors.name}
                             >
@@ -56,12 +59,12 @@ const StoreFormValidation = () => {
                                     type="text"
                                     autoComplete="off"
                                     name="name"
-                                    placeholder="Store Name"
+                                    placeholder="Tên cửa hàng"
                                     component={Input}
                                 />
                             </FormItem>
                             <FormItem
-                                label="Phone"
+                                label="Số diện thoại"
                                 invalid={errors.phone && touched.phone}
                                 errorMessage={errors.phone}
                             >
@@ -69,12 +72,12 @@ const StoreFormValidation = () => {
                                     type="number"
                                     autoComplete="off"
                                     name="phone"
-                                    placeholder="Phone"
+                                    placeholder="Số điện thoại"
                                     component={Input}
                                 />
                             </FormItem>
                             <FormItem
-                                label="Address"
+                                label="Địa chỉ"
                                 invalid={errors.phone && touched.phone}
                                 errorMessage={errors.address}
                             >
@@ -82,12 +85,12 @@ const StoreFormValidation = () => {
                                     type="text"
                                     autoComplete="off"
                                     name="address"
-                                    placeholder="Address"
+                                    placeholder="Địa chỉ"
                                     component={Input}
                                 />
                             </FormItem>
                             <FormItem
-                                label="Status"
+                                label="Trạng thái"
                                 asterisk
                                 invalid={errors.radio && touched.radio}
                                 errorMessage={errors.radio}
@@ -103,8 +106,8 @@ const StoreFormValidation = () => {
                                                 )
                                             }
                                         >
-                                            <Radio value={'active'}>Active</Radio>
-                                            <Radio value={'blocked'}>Blocked</Radio>
+                                            <Radio value={'active'}>Hoạt động</Radio>
+                                            <Radio value={'blocked'}>Tạm khoá</Radio>
                                         </Radio.Group>
                                     )}
                                 </Field>
@@ -112,18 +115,19 @@ const StoreFormValidation = () => {
                             <FormItem>
                                 <div className="flex gap-2">
                                     <Button type="reset" onClick={resetForm}>
-                                        Reset
+                                        Nhập lại
                                     </Button>
                                     <Button
                                         variant="solid"
                                         type="submit"
                                         loading={isSubmitting}
                                     >
-                                        Register
+                                        Khởi tạo
                                     </Button>
                                 </div>
                             </FormItem>
                         </FormContainer>
+                        <ToastContainer />
                     </Form>
                 )
             }}
