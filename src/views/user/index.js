@@ -19,10 +19,10 @@ const StoreCreate = () => {
         </h3>{" "}
         <Link
           // activeClass="text-gray-900 dark:text-gray-50"
-          className="cursor-pointer block transform transition-colors duration-200 py-2 hover:text-gray-900 dark:hover:text-gray-100"
+          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200"
           to="/delivery-store"
         >
-          Back{" "}
+          Trở về{" "}
         </Link>{" "}
       </div>{" "}
       <UserRegisForm state={state} />{" "}
