@@ -21,18 +21,18 @@ import { format } from "date-fns";
 const inventoryStatusColor = {
   success: {
     label: "giao thành công",
-    dotClass: "bg-emerald-500",
-    textClass: "text-emerald-500",
+    dotClass: "bg-green-600",
+    textClass: "text-green-600",
   },
   wait: {
     label: "Chờ giao",
-    dotClass: "bg-red-500",
-    textClass: "text-red-500",
+    dotClass: "bg-blue-500",
+    textClass: "text-blue-500",
   },
   delivering: {
     label: "đang giao",
-    dotClass: "bg-red-500",
-    textClass: "text-red-500",
+    dotClass: "bg-yellow-500",
+    textClass: "text-yellow-500",
   },
   fail: {
     label: "giao thất bại",
@@ -46,8 +46,8 @@ const inventoryStatusColor = {
   },
   cancel: {
     label: "đã huỷ",
-    dotClass: "bg-red-500",
-    textClass: "text-red-500",
+    dotClass: "bg-gray-500",
+    textClass: "text-gray-500",
   },
 };
 
