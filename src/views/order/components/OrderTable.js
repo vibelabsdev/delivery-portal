@@ -104,44 +104,42 @@ const OrderTable = ({ status }) => {
 
   const dispatch = useDispatch();
 
-  const { pageIndex, pageSize, sort, query, total } =
-    useSelector(selectTableData);
+  const { pageIndex, pageSize, sort, query, total } = useSelector(selectTableData)
   // const filterData = useSelector(
   //     (state) => state.salesProductList.data.filterData
   // )
-  const filterData = useSelector(selectFilterData);
-  const loading = useSelector(selectListOrderStatus);
-
-  const data = useSelector(selectListOrders);
+  const filterData = useSelector(selectFilterData)
+  const loading = useSelector(selectListOrderStatus)
+  
+  const data = useSelector(selectListOrders)
 
   useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line
-  }, [pageIndex, pageSize]);
+      fetchData()
+      // eslint-disable-next-line 
+  }, [pageIndex, pageSize, status])
   // pageIndex, pageSize, sort
   useEffect(() => {
-    if (tableRef) {
-      tableRef.current.resetSorting();
-    }
-  }, [filterData]);
+      if (tableRef) {
+          tableRef.current.resetSorting()
+      }
+  }, [filterData])
 
   const tableData = useMemo(
-    () => ({ pageIndex, pageSize, sort, query, total }),
-    [pageIndex, pageSize, sort, query, total]
-  );
+      () => ({ pageIndex, pageSize, sort, query, total }),
+      [pageIndex, pageSize, sort, query, total]
+  )
 
   const fetchData = () => {
-    const params = {
-      offset: pageIndex * pageSize - pageSize,
-      limit: pageSize,
-    };
-    // const offset = pageIndex*pageSize - pageSize
-    // consttotatotal limit = pageSize
-    // dispatch(fetchListStore({ offset, limit, sort, query, filterData }))
-    dispatch(fetchListOrderByStatus(params));
-  };
-    console.log(tableData);
-    console.log(total);
+      const params = {
+          offset : pageIndex*pageSize - pageSize,
+          limit : pageSize,
+          status: status
+      }
+      // const offset = pageIndex*pageSize - pageSize
+      // const limit = pageSize
+      // dispatch(fetchListStore({ offset, limit, sort, query, filterData }))
+      dispatch(fetchListOrderByStatus(params))
+  }
 
   const columns = useMemo(
     () => [
