@@ -106,7 +106,9 @@ const UserRegisForm = ({state}) => {
                     // if(result.data && result.data === true) {
                     //     notify()
                     // }
-                    
+                    .then (() => {
+                        notify();
+                    })
 
                     setSubmitting(false)
                     resetForm()
@@ -264,6 +266,7 @@ const UserRegisForm = ({state}) => {
                                 </div>
                             </FormItem>
                         </FormContainer>
+                        <ToastContainer />
                     </Form>
                 )
             }}
