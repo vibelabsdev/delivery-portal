@@ -13,7 +13,7 @@ const Side = ({ children, content, ...rest }) => {
                 }}
             >
                 <Logo mode="dark" />
-                <div>
+                {/* <div>
                     <div className="mb-6 flex items-center gap-4">
                         <Avatar
                             className="border-2 border-white"
@@ -32,10 +32,10 @@ const Side = ({ children, content, ...rest }) => {
                         crafted with Tailwind CSS, it fulfilled most of the use
                         case to create modern and beautiful UI and application
                     </p>
-                </div>
-                <span className="text-white">
+                </div> */}
+                <span className="text-gray-800">
                     Copyright &copy; {`${new Date().getFullYear()}`}{' '}
-                    <span className="font-semibold">{`${APP_NAME}`}</span>{' '}
+                    <span className="items-center font-semibold">{`${APP_NAME}`}</span>{' '}
                 </span>
             </div>
             <div className="col-span-2 flex flex-col justify-center items-center bg-white dark:bg-gray-800">
