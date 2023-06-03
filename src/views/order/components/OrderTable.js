@@ -128,7 +128,8 @@ const OrderTable = ({ status }) => {
       () => ({ pageIndex, pageSize, sort, query, total }),
       [pageIndex, pageSize, sort, query, total]
   )
-
+console.log(tableData);
+console.log(total);
   const fetchData = () => {
       const params = {
           offset : pageIndex*pageSize - pageSize,

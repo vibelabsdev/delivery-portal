@@ -52,7 +52,7 @@ const orderSlice = createSlice({
       })
       .addCase(fetchListOrderByStatus.fulfilled, (state, action) => {
         state.orderLists = action.payload.orders;
-        state.tableData.total = action.payload.store_total;
+        state.tableData.total = action.payload.order_total;
         state.loading = false;
       })
       .addCase(fetchListOrderByStatus.rejected, (state, action) => {
