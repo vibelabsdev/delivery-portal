@@ -60,7 +60,7 @@ function useAuth() {
             } else {
                 return {
                     status: 'failed',
-                    message: 'Invalid phone number or password' || resp?.msg,
+                    message: 'Sai số điện thoại hoặc mật khẩu!' || resp?.msg,
                 }
             }
         } catch (errors) {
