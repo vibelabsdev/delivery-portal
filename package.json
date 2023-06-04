@@ -10,6 +10,7 @@
     "@popperjs/core": "^2.9.2",
     "@react-icons/all-files": "^4.1.0",
     "@reduxjs/toolkit": "^1.9.5",
+    "@sentry/react": "^7.53.1",
     "@tailwindcss/forms": "^0.3.2",
     "@tailwindcss/typography": "^0.5.2",
     "@tanstack/match-sorter-utils": "^8.7.6",

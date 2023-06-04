@@ -40,6 +40,7 @@ export const UserDropdown = ({ className }) => {
                                 {userInfo?.payload?.name}
                             </div>
                             <div className="text-xs">{userInfo?.payload?.phone}</div>
+                            <div className="text-xs">{userInfo?.payload?.email}</div>
                         </div>
                     </div>
                 </Dropdown.Item>
@@ -70,7 +71,7 @@ export const UserDropdown = ({ className }) => {
                     <span className="text-xl opacity-50">
                         <HiOutlineLogout />
                     </span>
-                    <span>Sign Out</span>
+                    <span>Đăng xuất</span>
                 </Dropdown.Item>
             </Dropdown>
         </div>
