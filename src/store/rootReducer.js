@@ -6,6 +6,7 @@ import locale from './locale/localeSlice'
 import store from './delivery_store/storeSlice'
 import order from './delivery_order/orderSlice'
 import dashboardState from './delivery_dashboard/dashboardStateSlice'
+import dashboard from './delivery_dashboard/dashboardSlice'
 
 const rootReducer = (asyncReducers) => (state, action) => {
     const combinedReducer = combineReducers({
@@ -16,6 +17,7 @@ const rootReducer = (asyncReducers) => (state, action) => {
         store,
         order,
         dashboardState,
+        dashboard,
         ...asyncReducers,
     })
     return combinedReducer(state, action)

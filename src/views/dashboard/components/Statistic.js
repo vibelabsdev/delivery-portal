@@ -5,7 +5,8 @@ import { GrowShrinkTag } from 'components/shared'
 import { useSelector } from 'react-redux'
 import dayjs from 'dayjs'
 
-const StatisticCard = ({ data = {}, label, valuePrefix, date }) => {
+const StatisticCard = ({ value, label, valuePrefix, date }) => {
+
     return (
         <Card>
             <h6 className="font-semibold mb-4 text-sm">{label}</h6>
@@ -14,19 +15,14 @@ const StatisticCard = ({ data = {}, label, valuePrefix, date }) => {
                     <h3 className="font-bold">
                         <NumberFormat
                             displayType="text"
-                            value={data.value}
+                            value={value}
                             thousandSeparator
                             prefix={valuePrefix}
                         />
                     </h3>
-                    <p>
-                        vs. 3 months prior to{' '}
-                        <span className="font-semibold">
-                            {dayjs(date).format('DD MMM')}
-                        </span>
-                    </p>
+                    
                 </div>
-                <GrowShrinkTag value={data.growShrink} suffix="%" />
+                {/* <GrowShrinkTag value={data.growShrink} suffix="%" /> */}
             </div>
         </Card>
     )
@@ -37,25 +33,26 @@ const Statistic = ({ data = {} }) => {
     //     (state) => state.salesDashboard.state.startDate
     // )
 
+
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <StatisticCard
-                data={data.revenue}
+                value={data?.total_amount }
                 valuePrefix="$"
-                label="Revenue"
+                label="Tổng"
                 tagSuffix="%"
                 // date={startDate}
             />
             <StatisticCard
-                data={data.orders}
-                label="Orders"
+                value={data?.total_amount - data?.ship}
+                label="Tiền Hàng"
                 tagSuffix="%"
                 // date={startDate}
             />
             <StatisticCard
-                data={data.purchases}
+                value={data?.ship}
                 valuePrefix="$"
-                label="Purchases"
+                label="Tiền Ship"
                 tagSuffix="%"
                 // date={startDate}
             />
