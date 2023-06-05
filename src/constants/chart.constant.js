@@ -21,10 +21,10 @@ export const COLOR_7_LIGHT = twColor.cyan['100']
 export const COLORS = [
     COLOR_1,
     COLOR_2,
-    COLOR_3,
-    COLOR_4,
     COLOR_5,
     COLOR_6,
+    COLOR_3,
+    COLOR_4,
     COLOR_7,
 ]
 

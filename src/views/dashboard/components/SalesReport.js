@@ -3,6 +3,7 @@ import { Card, Button } from 'components/ui'
 import { Chart } from 'components/shared'
 
 const SalesReport = ({ className, data = {} }) => {
+    
     return (
         <Card className={className}>
             <div className="flex items-center justify-between">
