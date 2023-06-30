@@ -7,8 +7,9 @@
             "item1": "Chờ giao",
             "item2": "Đang giao",
             "item3": "Giao thành công",
-            "item4": "Giao thất bại",
-            "item5": "Đơn đã huỷ"
+            "item4": "Giao một phần",
+            "item5": "Giao thất bại",
+            "item6": "Đơn đã huỷ"
         },
         "groupMenu": {
             "groupMenu": "Group menu",
