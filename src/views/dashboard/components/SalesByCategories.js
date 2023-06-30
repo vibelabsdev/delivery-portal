@@ -31,7 +31,7 @@ const SalesByCategories = ({ data = {} }) => {
     
     return (
         <Card>
-            <h4>Order Chart</h4>
+            <h4>Biểu đồ</h4>
             <div className="mt-6">
                 {!isEmpty(dataChart) && (
                     <>
@@ -40,7 +40,7 @@ const SalesByCategories = ({ data = {} }) => {
                                 (a, b) => a + b,
                                 0
                             )}`}    
-                            donutText="Total Order"
+                            donutText="Tổng"
                             series={dataChart.data}
                             customOptions={{ labels: dataChart.labels }}
                             type="donut"

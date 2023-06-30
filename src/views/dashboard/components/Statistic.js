@@ -38,7 +38,7 @@ const Statistic = ({ data = {} }) => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <StatisticCard
                 value={data?.total_amount }
-                valuePrefix="$"
+                // valuePrefix="$"
                 label="Tổng"
                 tagSuffix="%"
                 // date={startDate}
@@ -51,8 +51,8 @@ const Statistic = ({ data = {} }) => {
             />
             <StatisticCard
                 value={data?.ship}
-                valuePrefix="$"
-                label="Tiền Ship"
+                // valuePrefix="$"
+                label="Phí giao hàng"
                 tagSuffix="%"
                 // date={startDate}
             />
