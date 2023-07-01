@@ -15,5 +15,6 @@ RUN npm run build
 
 FROM nginx:1.17.1-alpine
 RUN apk add msttcorefonts-installer
-COPY --from=build-step /web/build /usr/share/nginx/html
+WORKDIR /portal
+COPY --from=build-step /web/build /portal/
 COPY conf.d/default.conf /etc/nginx/conf.d/default.conf
