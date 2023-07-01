@@ -1,0 +1,37 @@
+name: CI
+
+on:
+    push:
+        branches: ["production"]
+    pull_request:
+        branches: ["production"]
+    workflow_dispatch:
+
+jobs:
+    Build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: Login to DockerHub Registry
+              run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+            
+            - name: Build backend
+              run: docker build -t ${{secrets.DOCKERHUB_USERNAME}}/portal:${{ github.run_number }} .
+              
+            - name: Push backend to Docker Hub
+              run: docker push ${{secrets.DOCKERHUB_USERNAME}}/portal:${{ github.run_number }}
+
+    Deploy:
+        needs: Build
+        runs-on: ubuntu-latest
+        steps:
+            - name: deploy
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USER }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  script: |
+                      echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+                      cd delivery-portal && DOCKERHUB_USERNAME=${{secrets.DOCKERHUB_USERNAME}} VERSION=${{ github.run_number }} docker compose up -d
+                      docker system prune --all -f
