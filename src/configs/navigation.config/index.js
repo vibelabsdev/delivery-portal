@@ -4,6 +4,8 @@ import {
     NAV_ITEM_TYPE_ITEM,
 } from "constants/navigation.constant";
 
+import { ADMIN, STORE } from 'constants/roles.constant'
+
 const navigationConfig = [{
         key: "home",
         path: "/home",
@@ -11,7 +13,7 @@ const navigationConfig = [{
         translateKey: "nav.home",
         icon: "home",
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [],
+        authority: [ADMIN],
         subMenu: [],
     },
     {
@@ -21,7 +23,7 @@ const navigationConfig = [{
         translateKey: "nav.delivery_store",
         icon: "collapseMenu",
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [],
+        authority: [ADMIN],
         subMenu: [],
     },
     {

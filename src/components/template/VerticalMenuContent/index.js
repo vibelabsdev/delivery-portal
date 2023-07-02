@@ -11,6 +11,8 @@ import {
 } from 'constants/navigation.constant'
 import useMenuActive from 'utils/hooks/useMenuActive'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { selectUserRole } from 'store/role/roleSlice'
 
 const { MenuGroup } = Menu
 
@@ -44,18 +46,38 @@ const VerticalMenuContent = (props) => {
         onMenuItemClick?.()
     }
 
+    // const userRole = useSelector(selectUserRole)
+    const userRole = localStorage.getItem('role')
+    
     const getNavItem = (nav) => {
         if (nav.subMenu.length === 0 && nav.type === NAV_ITEM_TYPE_ITEM) {
-            return (
-                <VerticalSingleMenuItem
-                    key={nav.key}
-                    nav={nav}
-                    onLinkClick={handleLinkClick}
-                    sideCollapsed={collapsed}
-                    userAuthority={userAuthority}
-                    direction={direction}
-                />
-            )
+
+            if(nav.key === 'delivery_store') {
+                if (nav.authority.includes(userRole)) {
+                    return (
+                        <VerticalSingleMenuItem
+                            key={nav.key}
+                            nav={nav}
+                            onLinkClick={handleLinkClick}
+                            sideCollapsed={collapsed}
+                            userAuthority={userAuthority}
+                            direction={direction}
+                        />
+                    )
+                }
+                
+            } else {
+                return (
+                    <VerticalSingleMenuItem
+                        key={nav.key}
+                        nav={nav}
+                        onLinkClick={handleLinkClick}
+                        sideCollapsed={collapsed}
+                        userAuthority={userAuthority}
+                        direction={direction}
+                    />
+                )
+            }
         }
 
         if (nav.subMenu.length > 0 && nav.type === NAV_ITEM_TYPE_COLLAPSE) {

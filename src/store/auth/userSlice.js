@@ -6,7 +6,6 @@ export const initialState = {
     email: '',
     phone: '',
     store_id: '',
-    permission: 'admin',
     authority: [],
 }
 

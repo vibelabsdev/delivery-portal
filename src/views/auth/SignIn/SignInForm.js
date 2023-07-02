@@ -39,12 +39,10 @@ const SignInForm = (props) => {
     const onSignIn = async (values, setSubmitting) => {
         const { phone, password } = values
         setSubmitting(true)     
-        console.log('-------signin has click----', values)
         
         // const result = await authLogin(values)
         // console.log('---result--', result)
         const result = await signIn({ phone, password })
-        console.log('---result--', result)
         if (result.status === 'failed') {
             setMessage(result.message)
         }

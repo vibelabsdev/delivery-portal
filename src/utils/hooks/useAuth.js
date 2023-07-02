@@ -9,6 +9,7 @@ import useQuery from './useQuery'
 import { authService } from 'services'
 import jwt from 'jwt-decode'
 import { LocalStorageService } from 'helpers'
+import { setRoleUser } from 'store/role/roleSlice'
 
 function useAuth() {
     const dispatch = useDispatch()
@@ -24,31 +25,34 @@ function useAuth() {
             // const resp = await apiSignIn(values)
             const response = await authService.login(values)
             const resp = await response.json();
-            console.log('----resp----', resp)
+
             if (resp.status === 1) {
                 const { token } = resp.data
                 dispatch(onSignInSuccess(token))
-                console.log('------resp-data---', resp.data)
+
                 LocalStorageService.setToken(resp.data)
                 const user = jwt(token);
-                console.log('-------user-------', user)
+
                 if (user) {
-                    dispatch(
-                        setUser(
-                            user || {
-                                avatar: '',
-                                name: 'Anonymous',
-                                phone: '',
-                                store_id: '',
-                                permission: 'admin',
-                                authority: ['USER'],
-                                email: '',
-                            }
-                        )
-                    )
+                    // dispatch(
+                    //     setUser(
+                    //         user || {
+                    //             avatar: '',
+                    //             name: 'Anonymous',
+                    //             phone: '',
+                    //             store_id: '',
+                    //             permission: 'admin',
+                    //             authority: ['USER'],
+                    //             email: '',
+                    //         }
+                    //     )
+                    // )
+                    // dispatch(setRoleUser(user))
+
+                    localStorage.setItem('role', user.payload.permission)
                 }
                 const redirectUrl = query.get(REDIRECT_URL_KEY)
-                console.log('--------redirectUrl-----', redirectUrl)
+
                 navigate(   
                     redirectUrl ? redirectUrl : appConfig.authenticatedEntryPath
                 )
