@@ -7,7 +7,7 @@ WORKDIR /web
 
 COPY package.json /web
 
-#COPY .env.production /dapp-rinz
+
 RUN yarn install
 
 COPY . /web
