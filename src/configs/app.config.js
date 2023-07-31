@@ -1,5 +1,5 @@
 const appConfig = {
-    apiPrefix: 'https://jl-family.com/v1',
+    apiPrefix: 'https://api.teship.net/v1',
     // apiPrefix: 'http://localhost:5001/v1',
     authenticatedEntryPath: '/home',
     unAuthenticatedEntryPath: '/sign-in',
