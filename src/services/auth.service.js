@@ -1,6 +1,7 @@
 import { LocalStorageService } from "helpers";
 
-const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
+// const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
+const API_ENDPOINT = 'https://api.teship.net/v1'
 const route = "/delivery-service/user";
 
 export const authService = {
