@@ -10,3 +10,10 @@ export const fetchListOrderByStatus = createAsyncThunk(
     return response.data;
   }
 );
+
+export const actionCreateOrder = async (dataReq) => {
+
+  const response = await OrderService.createOrder(dataReq)
+  return response
+}
+

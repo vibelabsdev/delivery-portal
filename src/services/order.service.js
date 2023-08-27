@@ -8,4 +8,8 @@ export const OrderService = {
       return axiosClient.get("/delivery-service/order/order-all", params);
     }
   },
+
+  createOrder: (dataReq) => {
+    return axiosClient.post('/delivery-service/order/order-cr', dataReq)
+  },
 };
