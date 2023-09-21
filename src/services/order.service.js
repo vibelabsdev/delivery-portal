@@ -12,4 +12,8 @@ export const OrderService = {
   createOrder: (dataReq) => {
     return axiosClient.post('/delivery-service/order/order-cr', dataReq)
   },
+
+  getOrderById: (params) => {
+    return axiosClient.get('/delivery-service/order/detail', params)
+  }
 };

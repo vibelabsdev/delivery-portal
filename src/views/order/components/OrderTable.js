@@ -56,47 +56,50 @@ const ActionColumn = ({ row }) => {
     const { textTheme } = useThemeClass();
     const navigate = useNavigate();
 
-    const onEdit = () => {
-        navigate(`/app/sales/product-edit/${row.id}`);
-    };
+    // const onEdit = () => {
+    //     navigate(`/delivery-order/detail/${row.id}`);
+    // };
+    const onDetail = () => {
+        console.log('------onDetail has work-----', row._id)
+        navigate(`/delivery-order/detail`, {
+            state: {
+            //   store_name: row.name,
+              order_id: row._id,
+            //   store_code: row.store_code,
+            },
+        });
+    }
 
     const onDelete = () => {
         dispatch(toggleDeleteConfirmation(true));
         dispatch(setSelectedProduct(row.id));
     };
 
-    return ( <
-        div className = "flex justify-end text-lg" >
-        <
-        span className = { `cursor-pointer p-2 hover:${textTheme}` }
-        onClick = { onEdit } >
-        <
-        HiOutlinePencil / >
-        <
-        /span>{" "} <
-        span className = "cursor-pointer p-2 hover:text-red-500"
-        onClick = { onDelete } >
-        <
-        HiOutlineTrash / >
-        <
-        /span>{" "} <
-        /div>
+    return ( 
+        < div className = "flex justify-end text-lg" >
+            < span className = { `cursor-pointer p-2 hover:${textTheme}` }
+                onClick = { onDetail } 
+            >
+            < HiOutlinePencil />
+            </span>{" "} <span className = "cursor-pointer p-2 hover:text-red-500"
+                onClick = { onDelete } >
+            <HiOutlineTrash />
+            </span>{" "} 
+        </div>
     );
 };
 
 const ProductColumn = ({ row }) => {
-    const avatar = row.img ? ( <
-        Avatar src = { row.img }
-        />
-    ) : ( <
-        Avatar icon = { < FiPackage / > }
-        />
-    );
+    const avatar = row.img ? ( 
+        <Avatar src = { row.img } />
+        ) : ( 
+            <Avatar icon = {< FiPackage />}/>
+        );
 
-    return ( <
-        div className = "flex items-center" > { " " } { avatar } { " " } <
-        span className = { `ml-2 rtl:mr-2 font-semibold` } > { row.name } < /span>{" "} <
-        /div>
+    return ( 
+        <div className = "flex items-center" > { " " } { avatar } { " " } 
+            <span className = { `ml-2 rtl:mr-2 font-semibold` } > { row.name } </span>{" "} 
+        </div>
     );
 };
 
@@ -160,7 +163,7 @@ const OrderTable = ({ status }) => {
                 cell: (props) => {
                     const { fee_ship } = props.row.original;
                     const formatFee = fee_ship.toLocaleString();
-                    return <span > { formatFee } < /span>;
+                    return <span> { formatFee } </span>;
                 },
                 sortable: true,
             },
@@ -170,7 +173,7 @@ const OrderTable = ({ status }) => {
                 cell: (props) => {
                     const { total_amount } = props.row.original;
                     const formatAmount = total_amount.toLocaleString();
-                    return <span > { formatAmount } < /span>;
+                    return <span> { formatAmount } </span>;
                 },
                 sortable: true,
             },
@@ -185,15 +188,13 @@ const OrderTable = ({ status }) => {
                 accessorKey: "status",
                 cell: (props) => {
                     const { status } = props.row.original;
-                    return ( <
-                        div className = "flex items-center gap-2" >
-                        <
-                        Badge className = { inventoryStatusColor[status].dotClass }
-                        />{" "} <
-                        span className = { `capitalize font-semibold ${inventoryStatusColor[status].textClass}` } >
-                        { inventoryStatusColor[status].label } { " " } <
-                        /span>{" "} <
-                        /div>
+                    return ( 
+                        <div className = "flex items-center gap-2" >
+                            <Badge className = { inventoryStatusColor[status].dotClass }/>{" "} 
+                            <span className = { `capitalize font-semibold ${inventoryStatusColor[status].textClass}` }>
+                            { inventoryStatusColor[status].label } { " " } 
+                            </span>{" "} 
+                        </div>
                     );
                 },
             },
@@ -206,15 +207,14 @@ const OrderTable = ({ status }) => {
                         new Date(created_time * 1000),
                         "dd/MM/yyyy HH:mm:ss"
                     );
-                    return <span > { formattedDateTime } < /span>;
+                    return <span > { formattedDateTime } </span>;
                 },
                 sortable: true,
             },
             {
                 header: "",
                 id: "action",
-                cell: (props) => < ActionColumn row = { props.row.original }
-                />,
+                cell: (props) => <ActionColumn row = { props.row.original } />,
             },
         ], []
     );
@@ -238,23 +238,23 @@ const OrderTable = ({ status }) => {
         dispatch(setTableData(newTableData));
     };
 
-    return ( <
-        >
-        <
-        DataTable ref = { tableRef }
-        columns = { columns }
-        data = { data }
-        skeletonAvatarColumns = {
-            [0] }
-        skeletonAvatarProps = {
-            { className: "rounded-md" } }
-        loading = { loading }
-        pagingData = { tableData }
-        onPaginationChange = { onPaginationChange }
-        onSelectChange = { onSelectChange }
-        onSort = { onSort }
-        />{" "} { /* <ProductDeleteConfirmation /> */ } { " " } <
-        />
+    return ( 
+        <>
+            <
+            DataTable ref = { tableRef }
+            columns = { columns }
+            data = { data }
+            skeletonAvatarColumns = {
+                [0] }
+            skeletonAvatarProps = {
+                { className: "rounded-md" } }
+            loading = { loading }
+            pagingData = { tableData }
+            onPaginationChange = { onPaginationChange }
+            onSelectChange = { onSelectChange }
+            onSort = { onSort }
+            />{" "} { /* <ProductDeleteConfirmation /> */ } { " " } 
+        </>
     );
 };
 

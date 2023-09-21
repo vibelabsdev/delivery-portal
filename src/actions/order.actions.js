@@ -17,3 +17,12 @@ export const actionCreateOrder = async (dataReq) => {
   return response
 }
 
+export const actionGetOrderDetail = async (params) => {
+  console.log('-----params----', params)
+
+  const response = await OrderService.getOrderById(params)
+  console.log('----response--response---', response)
+  return response
+}
+
+

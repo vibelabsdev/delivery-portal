@@ -49,7 +49,7 @@ const ActionColumn = ({ row }) => {
   };
 
   const onCreate = () => {
-    console.log("---onCreate has work----", row);
+
     navigate(`/delivery-user/create`, {
       state: {
         store_name: row.name,
