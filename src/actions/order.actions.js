@@ -18,11 +18,7 @@ export const actionCreateOrder = async (dataReq) => {
 }
 
 export const actionGetOrderDetail = async (params) => {
-  console.log('-----params----', params)
 
-  const response = await OrderService.getOrderById(params)
-  console.log('----response--response---', response)
+  const response = await OrderService.getOrderById({params});
   return response
 }
-
-

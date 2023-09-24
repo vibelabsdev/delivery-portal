@@ -1,34 +1,3 @@
-// import React, { useEffect } from "react";
-// import { AdaptableCard } from "components/shared";
-
-// import { Link, useLocation } from "react-router-dom";
-
-
-// const OrderDetail = () => {
-//   const { state } = useLocation();
-//   const { order_id } = state; 
-//   return (
-//     <AdaptableCard className="h-full" bodyClass="h-full">
-//       <div className="lg:flex items-center justify-between mb-4">
-//         <h3 className="mb-4 lg:mb-0">
-          
-//           Order Detail - {order_id}
-//         </h3>
-//         <Link
-//           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200"
-//           to="/delivery-store"
-//         >
-//           Trở về{" "}
-//         </Link>{" "}
-//       </div>{" "}
-
-
-//     </AdaptableCard>
-//   );
-// };
-
-// export default OrderDetail;
-
 import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import { Tag } from 'components/ui'
@@ -46,13 +15,29 @@ import dayjs from 'dayjs'
 import { actionGetOrderDetail } from 'actions/order.actions'
 
 const paymentStatus = {
-    0: {
-        label: 'Paid',
-        class: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100',
+    wait: {
+        label: 'Chờ giao',
+        class: 'bg-blue-500 text-white dark:bg-emerald-500/20 dark:text-emerald-100',
     },
-    1: {
-        label: 'Unpaid',
-        class: 'text-red-500 bg-red-100 dark:text-red-100 dark:bg-red-500/20',
+    delivering: {
+        label: 'Đang giao',
+        class: 'bg-yellow-500 text-white dark:text-red-100 dark:bg-red-500/20',
+    },
+    success: {
+        label: 'Giao thành công',
+        class: 'bg-green-600 text-white dark:text-red-100 dark:bg-red-500/20',
+    },
+    partial_success: {
+        label: 'Giao một phần',
+        class: 'bg-green-600 text-white dark:text-red-100 dark:bg-red-500/20',
+    },
+    fail: {
+        label: 'Giao thất bại',
+        class: 'bg-red-500 text-white dark:text-red-100 dark:bg-red-500/20',
+    },
+    cancel: {
+        label: 'Đơn đã huỷ',
+        class: 'bg-gray-500 text-white dark:text-red-100 dark:bg-red-500/20',
     },
 }
 
@@ -81,14 +66,11 @@ const OrderDetails = () => {
     }, [])
 
     const fetchData = async () => {
-        // const id = location.pathname.substring(
-        //     location.pathname.lastIndexOf('/') + 1
-        // )
+       
         if (order_id) {
             console.log('------order-id--------', order_id)
             setLoading(true)
-            // const response = await apiGetSalesOrderDetails({ id })
-            
+
             const response = await actionGetOrderDetail({
                 id: order_id
             })
@@ -111,49 +93,49 @@ const OrderDetails = () => {
                                 <h3>
                                     <span>Order</span>
                                     <span className="ltr:ml-2 rtl:mr-2">
-                                        #{data.id}
+                                        {data.order_code}
                                     </span>
                                 </h3>
                                 <Tag
                                     className={classNames(
                                         'border-0 rounded-md ltr:ml-2 rtl:mr-2',
-                                        paymentStatus[data.payementStatus].class
+                                        paymentStatus[data.status].class
                                     )}
                                 >
-                                    {paymentStatus[data.payementStatus].label}
+                                    {paymentStatus[data.status].label}
                                 </Tag>
-                                <Tag
+                                {/* <Tag
                                     className={classNames(
                                         'border-0 rounded-md ltr:ml-2 rtl:mr-2',
-                                        progressStatus[data.progressStatus]
+                                        progressStatus[0]
                                             .class
                                     )}
                                 >
-                                    {progressStatus[data.progressStatus].label}
-                                </Tag>
+                                    {progressStatus[0].label}
+                                </Tag> */}
                             </div>
                             <span className="flex items-center">
                                 <HiOutlineCalendar className="text-lg" />
                                 <span className="ltr:ml-1 rtl:mr-1">
                                     {dayjs
-                                        .unix(data.dateTime)
+                                        .unix(data.created_time)
                                         .format('ddd DD-MMM-YYYY, hh:mm A')}
                                 </span>
                             </span>
                         </div>
                         <div className="xl:flex gap-4">
                             <div className="w-full">
-                                <OrderProducts data={data.product} />
+                                <OrderProducts data={data.product_list} />
                                 <div className="xl:grid grid-cols-2 gap-4">
 
                                     <PaymentSummary
-                                        data={data.paymentSummary}
+                                        data={data}
                                     />
                                 </div>
                                
                             </div>
                             <div className="xl:max-w-[360px] w-full">
-                                <CustomerInfo data={data.customer} />
+                                <CustomerInfo data={data} />
                             </div>
                         </div>
                     </>

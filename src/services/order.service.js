@@ -14,6 +14,6 @@ export const OrderService = {
   },
 
   getOrderById: (params) => {
-    return axiosClient.get('/delivery-service/order/detail', params)
+    return axiosClient.get("/delivery-service/order/detail", params)
   }
 };

@@ -51,9 +51,6 @@ const UserRegisForm = ({state}) => {
         e.preventDefault()
         setPwInputType(pwInputType === 'password' ? 'text' : 'password')
     }
-    console.log(store_id);
-    console.log(store_code);
-    console.log(store_name);
 
     const passwordVisible = (
         <span

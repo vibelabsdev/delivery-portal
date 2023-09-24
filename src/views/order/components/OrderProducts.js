@@ -12,24 +12,12 @@ import isLastChild from 'utils/isLastChild'
 const { Tr, Th, Td, THead, TBody } = Table
 
 const ProductColumn = ({ row }) => {
+
     return (
         <div className="flex">
-            <Avatar size={90} src={row.img} />
             <div className="ltr:ml-2 rtl:mr-2">
-                <h6 className="mb-2">{row.name}</h6>
-                {Object.keys(row.details).map((key, i) => (
-                    <div className="mb-1" key={key + i} value={key}>
-                        <span className="capitalize">{key}: </span>
-                        {row.details[key].map((item, j) => (
-                            <Fragment key={item + j}>
-                                <span className="font-semibold">{item}</span>
-                                {!isLastChild(row.details[key], j) && (
-                                    <span>, </span>
-                                )}
-                            </Fragment>
-                        ))}
-                    </div>
-                ))}
+                <h6 className="mb-2">{row}</h6>
+                
             </div>
         </div>
     )
@@ -47,35 +35,28 @@ const PriceAmount = ({ amount }) => {
 }
 
 const OrderProducts = ({ data }) => {
+
     const columns = useMemo(
         () => [
             {
-                header: 'Product',
+                header: 'Sản phẩm',
                 accessorKey: 'name',
                 cell: (props) => {
                     const row = props.row.original
-                    return <ProductColumn row={row} />
+                    return <ProductColumn row={row.product_name} />
                 },
             },
             {
-                header: 'Price',
+                header: 'Giá',
                 accessorKey: 'price',
                 cell: (props) => {
                     const row = props.row.original
-                    return <PriceAmount amount={row.price} />
+                    return <PriceAmount amount={row.product_price} />
                 },
             },
             {
-                header: 'Quantity',
+                header: 'Số lượng',
                 accessorKey: 'quantity',
-            },
-            {
-                header: 'Total',
-                accessorKey: 'total',
-                cell: (props) => {
-                    const row = props.row.original
-                    return <PriceAmount amount={row.price} />
-                },
             },
         ],
         []
