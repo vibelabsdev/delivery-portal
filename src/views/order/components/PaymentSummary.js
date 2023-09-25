@@ -4,7 +4,9 @@ import NumberFormat from 'react-number-format'
 import BarCode from './BarCode'
 
 const FormatPrice = (price) => {
-    return price.toLocaleString()
+    if(price)
+        return price.toLocaleString()
+    return 0
 }
 
 

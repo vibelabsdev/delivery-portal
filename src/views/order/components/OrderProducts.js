@@ -37,7 +37,9 @@ const PriceAmount = ({ amount }) => {
 const OrderProducts = ({ data }) => {
 
     const FormatPrice = (price) => {
-        return price.toLocaleString()
+        if(price)
+            return price.toLocaleString()
+        return 0
     }
 
     const columns = useMemo(

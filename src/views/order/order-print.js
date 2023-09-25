@@ -2,7 +2,9 @@ import React from 'react'
 import BarCode from './components/BarCode';
 
 const FormatPrice = (price) => {
-    return price.toLocaleString()
+    if(price)
+        return price.toLocaleString()
+    return 0
 }
 
 export const OrderPrint = React.forwardRef(({data}, ref) => {
