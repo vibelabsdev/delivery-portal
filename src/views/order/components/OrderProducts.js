@@ -36,6 +36,10 @@ const PriceAmount = ({ amount }) => {
 
 const OrderProducts = ({ data }) => {
 
+    const FormatPrice = (price) => {
+        return price.toLocaleString()
+    }
+
     const columns = useMemo(
         () => [
             {
@@ -51,7 +55,7 @@ const OrderProducts = ({ data }) => {
                 accessorKey: 'price',
                 cell: (props) => {
                     const row = props.row.original
-                    return <PriceAmount amount={row.product_price} />
+                    return <span>{FormatPrice(row.product_price)}</span>
                 },
             },
             {

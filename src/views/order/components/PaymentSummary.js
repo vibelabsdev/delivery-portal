@@ -3,6 +3,11 @@ import { Card } from 'components/ui'
 import NumberFormat from 'react-number-format'
 import BarCode from './BarCode'
 
+const FormatPrice = (price) => {
+    return price.toLocaleString()
+}
+
+
 const PaymentInfo = ({ label, value, isLast }) => {
     return (
         <li
@@ -26,14 +31,25 @@ const PaymentInfo = ({ label, value, isLast }) => {
 const PaymentSummary = ({ data }) => {
     return (
         <Card className="mb-4">
-            <h5 className="mb-4">Payment Summary</h5>
-            <ul>
+            <h5 className="mb-4">Thanh Toán</h5>
+            <ul className='flex gap-y-2 flex-col'>
                 
-                <PaymentInfo label="Subtotal" value={data.total_amount - data.fee_ship} />
-                <PaymentInfo label="Delivery fee" value={data.fee_ship} />
+                <div className='flex flex-row justify-between'>
+                    <p>Tiền hàng: </p>
+                    <span className='right'>{FormatPrice(data.total_amount - data.fee_ship)}</span>
+                </div>
+
+                <div className='flex flex-row justify-between'>
+                    <p>Phí ship: </p>
+                    <span className='right'>{FormatPrice(data.fee_ship)}</span>
+                </div>
                 
                 <hr className="mb-3" />
-                <PaymentInfo label="Total" value={data.total_amount} isLast />
+                
+                <div className='flex flex-row justify-between'>
+                    <p>Tổng cộng: </p>
+                    <span className='right'>{FormatPrice(data.total_amount)}</span>
+                </div>
             </ul>
             
             <hr className="mb-4 mt-4" />

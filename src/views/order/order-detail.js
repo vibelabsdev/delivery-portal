@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import { Tag } from 'components/ui'
 import { Loading, Container, DoubleSidedImage } from 'components/shared'
 import OrderProducts from './components/OrderProducts'
 import PaymentSummary from './components/PaymentSummary'
-import { OrderService } from "services/order.service";
+import ReactToPrint from 'react-to-print';
 
 import CustomerInfo from './components/CustomerInfo'
 import { HiOutlineCalendar } from 'react-icons/hi'
@@ -13,6 +13,8 @@ import { useLocation } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
 import dayjs from 'dayjs'
 import { actionGetOrderDetail } from 'actions/order.actions'
+// import OrderPrint from './order-print'
+import { OrderPrint } from './order-print';
 
 const paymentStatus = {
     wait: {
@@ -59,7 +61,9 @@ const OrderDetails = () => {
     const [data, setData] = useState({})
 
     const { state } = useLocation();
-    const { order_id } = state; 
+    const { order_id } = state;
+
+    const componentRef = useRef();
 
     useEffect(() => {
         fetchData()
@@ -68,7 +72,6 @@ const OrderDetails = () => {
     const fetchData = async () => {
        
         if (order_id) {
-            console.log('------order-id--------', order_id)
             setLoading(true)
 
             const response = await actionGetOrderDetail({
@@ -81,14 +84,14 @@ const OrderDetails = () => {
         }
     }
 
-    console.log('------data---detail-----', data)
-
     return (
+        <>
         <Container className="h-full">
             <Loading loading={loading}>
                 {!isEmpty(data) && (
                     <>
-                        <div className="mb-6">
+                        <div className="mb-6 flex flex-row justify-between">
+                            <div>
                             <div className="flex items-center mb-2">
                                 <h3>
                                     <span>Order</span>
@@ -104,15 +107,7 @@ const OrderDetails = () => {
                                 >
                                     {paymentStatus[data.status].label}
                                 </Tag>
-                                {/* <Tag
-                                    className={classNames(
-                                        'border-0 rounded-md ltr:ml-2 rtl:mr-2',
-                                        progressStatus[0]
-                                            .class
-                                    )}
-                                >
-                                    {progressStatus[0].label}
-                                </Tag> */}
+                                
                             </div>
                             <span className="flex items-center">
                                 <HiOutlineCalendar className="text-lg" />
@@ -122,6 +117,13 @@ const OrderDetails = () => {
                                         .format('ddd DD-MMM-YYYY, hh:mm A')}
                                 </span>
                             </span>
+                            </div>
+                            <div>
+                                <ReactToPrint
+                                    trigger={() => <button className='bg-blue-500 text-white w-[100px] p-2 rounded'>In đơn</button>}
+                                    content={() => componentRef.current}
+                                />
+                            </div>
                         </div>
                         <div className="xl:flex gap-4">
                             <div className="w-full">
@@ -152,6 +154,11 @@ const OrderDetails = () => {
                 </div>
             )}
         </Container>
+        <div className='hidden'>
+            <OrderPrint data={data} ref={componentRef} />
+        </div>
+        
+        </>
     )
 }
 
