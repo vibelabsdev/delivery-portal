@@ -13,18 +13,18 @@ export const OrderPrint = React.forwardRef(({data}, ref) => {
       <div ref={ref} className='flex-col justify-center items-center mt-[24px] py-4 flex'>
         <BarCode order_code={data.order_code}/>
         <div className='w-full px-8'>
-            <ul className='text-red text-base text-center pt-[24px]'>
+            <ul className='text-red text-base text-center pt-[24px] text-black'>
                 {
                     data.product_list?.map((item) => (
-                        <li className='font-normal'>Sản phẩm: {item.product_name} | Giá: {FormatPrice(item.product_price)} | Số lượng {item.quantity}</li>
+                        <li className='font-semibold'>Sản phẩm: {item.product_name} | Giá: {FormatPrice(item.product_price)} | Số lượng {item.quantity}</li>
                     ))
                 }
 
             </ul>
             
         </div>
-        <div className='flex flex-row w-full font-bold px-[32px] justify-center items-center gap-x-20 mt-[40px]'>
-            <div className='flex flex-col'>
+        <div className='flex flex-row w-full font-bold px-[32px] justify-center items-center gap-x-20 mt-[40px] text-black	 '>
+            <div className='flex flex-col '>
                 <p>Tên: {data.cust_name}</p>
                 <p>Số điện thoại: {data.cust_phone}</p>
                 <p>Địa chỉ: {data.address}</p>
