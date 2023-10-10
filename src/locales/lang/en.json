@@ -9,7 +9,8 @@
             "item3": "Giao thành công",
             "item4": "Giao một phần",
             "item5": "Giao thất bại",
-            "item6": "Đơn đã huỷ"
+            "item6": "Đơn đã huỷ",
+            "item7": "Đơn hẹn giao"
         },
         "groupMenu": {
             "groupMenu": "Group menu",

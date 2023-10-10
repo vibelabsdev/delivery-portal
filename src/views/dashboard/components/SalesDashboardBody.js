@@ -22,10 +22,10 @@ const SalesDashboardBody = () => {
         <Loading loading={false}>
             <Statistic data={dashboardData} />
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                 <SalesReport data={salesReportData} className="col-span-2" />
                 <SalesByCategories data={dashboardData} />
-            </div>
+            </div> */}
             
         </Loading>
     )

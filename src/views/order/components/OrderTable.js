@@ -49,6 +49,11 @@ const inventoryStatusColor = {
         dotClass: "bg-gray-500",
         textClass: "text-gray-500",
     },
+    delay: {
+        label: "đơn hẹn",
+        dotClass: "bg-gray-500",
+        textClass: "text-gray-500",
+    },
 };
 
 const ActionColumn = ({ row }) => {
@@ -132,7 +137,7 @@ const OrderTable = ({ status }) => {
     const tableData = useMemo(
         () => ({ pageIndex, pageSize, sort, query, total }), [pageIndex, pageSize, sort, query, total]
     );
-    console.log(tableData);
+
     console.log(total);
     const fetchData = () => {
         const params = {

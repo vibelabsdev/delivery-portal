@@ -10,10 +10,15 @@ import {
 import dayjs from "dayjs";
 import { fetchDataDashboard } from "actions/dashboard.actions";
 import { selectDashboardData } from "store/delivery_dashboard/dashboardSlice";
+import jwt from 'jwt-decode'
 
 const dateFormat = "DD-MM-YYYY";
 
 const { DatePickerRange } = DatePicker;
+
+const userRole = localStorage.getItem('role')
+const token = localStorage.getItem('accessToken')
+const store_id = jwt(token)?.payload.store_id;
 
 const SalesDashboardHeader = () => {
   const dispatch = useDispatch();
@@ -33,6 +38,8 @@ const SalesDashboardHeader = () => {
   const startDate = useSelector((state) => state.dashboardState.startDate);
   const endDate = useSelector((state) => state.dashboardState.endDate);
 
+  
+
   const handleDateChange = (value) => {
     dispatch(setStartDate(value[0]));
     dispatch(setEndDate(value[1]));
@@ -43,13 +50,23 @@ const SalesDashboardHeader = () => {
     const end_date = formatDate(endDate);
     useEffect(() => {
       if (startDate && endDate) {
-        fetchDashboard();
+        if (userRole === 'store'){
+          fetchDashboardByStore()
+        }else {
+          fetchDashboard();
+        }
+        
       }
     }, [date, end_date]);
 
     const fetchDashboard = async () => {
       await dispatch(fetchDataDashboard({ date, end_date }));
     };
+
+    const fetchDashboardByStore = async () => {
+      await dispatch(fetchDataDashboard({ date, end_date, store_id }));
+    }
+    
   };
 
   return (

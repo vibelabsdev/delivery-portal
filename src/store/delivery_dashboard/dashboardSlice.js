@@ -39,15 +39,17 @@ const dashboardSlice = createSlice({
           state.loading = true
         })
         .addCase(fetchDataDashboard.fulfilled, (state, action) => {
-            state.dashboardData.total_order = action.payload.total_order;
-            state.dashboardData.order_fail = action.payload.order_fail;
-            state.dashboardData.order_success = action.payload.order_wait;
-            state.dashboardData.order_partial_success = action.payload.order_partial_success;
-            
-            state.dashboardData.order_cancel = action.payload.order_cancel;
-            state.dashboardData.total_amount = action.payload.total_amount;
-            state.dashboardData.ship = action.payload.ship;
-            state.loading = false
+
+          state.dashboardData.total_order = action.payload.total_order;
+          state.dashboardData.order_fail = action.payload.order_fail;
+          state.dashboardData.order_wait = action.payload.order_wait;
+          state.dashboardData.order_success = action.payload.order_success;
+          state.dashboardData.order_partial_success = action.payload.order_partial_success;
+          
+          state.dashboardData.order_cancel = action.payload.order_cancel;
+          state.dashboardData.total_amount = action.payload.total_amount;
+          state.dashboardData.ship = action.payload.ship;
+          state.loading = false
         })
         .addCase(fetchDataDashboard.rejected, (state, action) => {
           state.orderLists = [];

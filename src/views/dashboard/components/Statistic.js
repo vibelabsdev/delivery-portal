@@ -33,8 +33,10 @@ const Statistic = ({ data = {} }) => {
     //     (state) => state.salesDashboard.state.startDate
     // )
 
+    console.log('-----data------', data)
 
     return (
+        <>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <StatisticCard
                 value={data?.total_amount }
@@ -56,7 +58,54 @@ const Statistic = ({ data = {} }) => {
                 tagSuffix="%"
                 // date={startDate}
             />
+
         </div>
+        <div className='grid grid-cols-1 lg:grid-cols-4 gap-4 mt-[40px]'>
+            <StatisticCard
+                value={data?.total_order}
+                // valuePrefix="$"
+                label="Tổng đơn hàng"
+                tagSuffix="%"
+                // date={startDate}
+            />
+            <StatisticCard
+                value={data?.order_success}
+                // valuePrefix="$"
+                label="Đơn thành công"
+                tagSuffix="%"
+                // date={startDate}
+            />
+            <StatisticCard
+                value={data?.order_wait}
+                // valuePrefix="$"
+                label="Đơn chờ giao"
+                tagSuffix="%"
+                // date={startDate}
+            />
+            <StatisticCard
+                value={data?.order_delivering}
+                // valuePrefix="$"
+                label="Đơn đang giao"
+                tagSuffix="%"
+                // date={startDate}
+            />
+
+            <StatisticCard
+                value={data?.order_cancel}
+                // valuePrefix="$"
+                label="Đơn đã huỷ"
+                tagSuffix="%"
+                // date={startDate}
+            />
+            <StatisticCard
+                value={0}
+                // valuePrefix="$"
+                label="Đơn hẹn giao"
+                tagSuffix="%"
+                // date={startDate}
+            />
+        </div>
+        </>
     )
 }
 
