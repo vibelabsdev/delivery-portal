@@ -109,12 +109,18 @@ const OrderDetails = () => {
                                 </Tag>
                                 
                             </div>
-                            <span className="flex items-center">
-                                <HiOutlineCalendar className="text-lg" />
-                                <span className="ltr:ml-1 rtl:mr-1">
-                                    {dayjs
-                                        .unix(data.created_time)
-                                        .format('ddd DD-MMM-YYYY, hh:mm A')}
+                            <span className="flex items-center gap-6">
+                                <div className='flex items-center'>
+                                    <HiOutlineCalendar className="text-lg" />
+                                    <span className="ltr:ml-1 rtl:mr-1">
+                                        {dayjs
+                                            .unix(data.created_time)
+                                            .format('ddd DD-MMM-YYYY, hh:mm A')}
+                                    </span>
+                                </div>
+                                
+                                <span>
+                                    Tên cửa hàng: {data.store_name}
                                 </span>
                             </span>
                             </div>

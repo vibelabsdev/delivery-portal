@@ -36,7 +36,8 @@ export const OrderPrint = React.forwardRef(({data}, ref) => {
         </div>
         <div className='flex flex-row w-full font-bold px-[32px] justify-center items-center gap-x-20 mt-[40px] text-black	 '>
             <div className='flex flex-col '>
-                <p>Tên: {data.cust_name}</p>
+                <p>Tên cửa hàng: {data.store_name}</p>
+                <p>Tên Khách hàng: {data.cust_name}</p>
                 <p>Số điện thoại: {data.cust_phone}</p>
                 <p>Địa chỉ: {data.address}</p>
                 <p>Loại giao: {orderTypeConvert[data.order_type]?.label}</p>
