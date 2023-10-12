@@ -41,6 +41,10 @@ const paymentStatus = {
         label: 'Đơn đã huỷ',
         class: 'bg-gray-500 text-white dark:text-red-100 dark:bg-red-500/20',
     },
+    delay: {
+        label: 'Đơn hẹn',
+        class: 'bg-gray-500 text-white dark:text-red-100 dark:bg-red-500/20',
+    },
 }
 
 const progressStatus = {
