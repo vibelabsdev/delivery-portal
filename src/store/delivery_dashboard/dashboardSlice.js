@@ -45,6 +45,7 @@ const dashboardSlice = createSlice({
           state.dashboardData.order_wait = action.payload.order_wait;
           state.dashboardData.order_success = action.payload.order_success;
           state.dashboardData.order_partial_success = action.payload.order_partial_success;
+          state.dashboardData.order_delay = action.payload.order_delay;
           
           state.dashboardData.order_cancel = action.payload.order_cancel;
           state.dashboardData.total_amount = action.payload.total_amount;

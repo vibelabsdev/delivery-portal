@@ -98,7 +98,7 @@ const Statistic = ({ data = {} }) => {
                 // date={startDate}
             />
             <StatisticCard
-                value={0}
+                value={data?.order_delay}
                 // valuePrefix="$"
                 label="Đơn hẹn giao"
                 tagSuffix="%"
