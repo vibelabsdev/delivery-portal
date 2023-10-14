@@ -76,6 +76,13 @@ const Statistic = ({ data = {} }) => {
                 // date={startDate}
             />
             <StatisticCard
+                value={data?.order_partial_success}
+                // valuePrefix="$"
+                label="Đơn một phần"
+                tagSuffix="%"
+                // date={startDate}
+            />
+            <StatisticCard
                 value={data?.order_wait}
                 // valuePrefix="$"
                 label="Đơn chờ giao"
