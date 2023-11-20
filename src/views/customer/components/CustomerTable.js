@@ -1,0 +1,236 @@
+import React, { useEffect, useMemo, useRef } from "react";
+import { Avatar, Badge } from "components/ui";
+import {
+  HiOutlinePencil,
+  HiOutlineTrash,
+  HiOutlineUserAdd,
+} from "react-icons/hi";
+import { FiPackage } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import useThemeClass from "utils/hooks/useThemeClass";
+import { useNavigate } from "react-router-dom";
+import cloneDeep from "lodash/cloneDeep";
+
+import { DataTable } from "components/shared";
+import { format } from "date-fns";
+import { selectFilterData, selectListCustomers, selectListCustomersStatus, selectTableData, setTableData } from "store/delivery_customer/customerSlice";
+import { fetchListCustomerByStore } from "actions/customer.action";
+
+const inventoryStatusColor = {
+  active: {
+    label: "Hoạt động",
+    dotClass: "bg-emerald-500",
+    textClass: "text-emerald-500",
+  },
+  blocked: {
+    label: "Tạm khoá",
+    dotClass: "bg-red-500",
+    textClass: "text-red-500",
+  },
+};
+
+const ActionColumn = ({ row }) => {
+  const dispatch = useDispatch();
+  const { textTheme } = useThemeClass();
+  const navigate = useNavigate();
+
+  const onEdit = () => {
+    navigate(`/app/sales/product-edit/${row.id}`);
+  };
+
+  const onDelete = () => {
+    dispatch(toggleDeleteConfirmation(true));
+    dispatch(setSelectedProduct(row.id));
+  };
+
+  const onCreate = () => {
+
+    navigate(`/delivery-user/create`, {
+      state: {
+        store_name: row.name,
+        store_id: row._id,
+        store_code: row.store_code,
+      },
+    });
+  };
+
+  return (
+    <div className="flex justify-end text-lg">
+      <span
+        className={`cursor-pointer p-2 hover:${textTheme}`}
+        onClick={onCreate}
+      >
+        <HiOutlineUserAdd />
+      </span>{" "}
+      <span
+        className={`cursor-pointer p-2 hover:${textTheme}`}
+        onClick={onEdit}
+      >
+        <HiOutlinePencil />
+      </span>{" "}
+      <span
+        className="cursor-pointer p-2 hover:text-red-500"
+        onClick={onDelete}
+      >
+        <HiOutlineTrash />
+      </span>{" "}
+    </div>
+  );
+};
+
+const ProductColumn = ({ row }) => {
+  const avatar = row.img ? (
+    <Avatar src={row.img} />
+  ) : (
+    <Avatar icon={<FiPackage />} />
+  );
+
+  return (
+    <div className="flex items-center">
+      {" "}
+      {avatar}{" "}
+      <span className={`ml-2 rtl:mr-2 font-semibold`}> {row.name} </span>{" "}
+    </div>
+  );
+};
+
+const CustomerTable = () => {
+  const tableRef = useRef(null);
+
+  const dispatch = useDispatch();
+
+  const { pageIndex, pageSize, sort, query, total } =
+    useSelector(selectTableData);
+
+  const filterData = useSelector(selectFilterData);
+  const loading = useSelector(selectListCustomersStatus);
+
+  const data = useSelector(selectListCustomers);
+
+  useEffect(() => {
+    fetchData();
+  }, [pageIndex, pageSize]);
+  // pageIndex, pageSize, sort
+  useEffect(() => {
+    if (tableRef) {
+      tableRef.current.resetSorting();
+    }
+  }, [filterData]);
+
+  const tableData = useMemo(
+    () => ({ pageIndex, pageSize, sort, query, total }),
+    [pageIndex, pageSize, sort, query, total]
+  );
+
+  const fetchData = () => {
+    const params = {
+      offset: pageIndex * pageSize - pageSize,
+      limit: pageSize,
+    };
+    
+    dispatch(fetchListCustomerByStore(params));
+  };
+  console.log(tableData);
+  const columns = useMemo(
+    () => [
+      {
+        header: "Tên khách hàng",
+        accessorKey: "name",
+        cell: (props) => {
+          const row = props.row.original;
+          return <ProductColumn row={row} />;
+        },
+      },
+      {
+        header: "Số điện thoại",
+        accessorKey: "phone",
+        sortable: true,
+      },
+      {
+        header: "Địa chỉ",
+        accessorKey: "address",
+        cell: (props) => {
+            const { address } = props.row.original;
+            return (
+              <p>{address.street}, {address.ward}, {address.district}, {address.city}</p>
+            );
+          },
+      },
+      {
+        header: "Trạng thái",
+        accessorKey: "status",
+        cell: (props) => {
+          const { status } = props.row.original;
+          return (
+            <div className="flex items-center gap-2">
+              <Badge className={inventoryStatusColor[status].dotClass} />{" "}
+              <span
+                className={`capitalize font-semibold ${inventoryStatusColor[status].textClass}`}
+              >
+                {inventoryStatusColor[status].label}{" "}
+              </span>{" "}
+            </div>
+          );
+        },
+      },
+      {
+        header: "Thời gian khởi tạo",
+        accessorKey: "created_time",
+        cell: (props) => {
+          const { created_time } = props.row.original;
+          const formattedDateTime = format(
+            new Date(created_time * 1000),
+            "dd/MM/yyyy HH:mm:ss"
+          );
+          return <span> {formattedDateTime} </span>;
+        },
+        sortable: true,
+      },
+      {
+        header: "",
+        id: "action",
+        cell: (props) => <ActionColumn row={props.row.original} />,
+      },
+    ],
+    []
+  );
+
+  const onPaginationChange = (page) => {
+    const newTableData = cloneDeep(tableData);
+    newTableData.pageIndex = page;
+    dispatch(setTableData(newTableData));
+  };
+
+  const onSelectChange = (value) => {
+    const newTableData = cloneDeep(tableData);
+    newTableData.pageSize = Number(value);
+    newTableData.pageIndex = 1;
+    dispatch(setTableData(newTableData));
+  };
+
+  const onSort = (sort, sortingColumn) => {
+    const newTableData = cloneDeep(tableData);
+    newTableData.sort = sort;
+    dispatch(setTableData(newTableData));
+  };
+
+  return (
+    <>
+      <DataTable
+        ref={tableRef}
+        columns={columns}
+        data={data}
+        skeletonAvatarColumns={[0]}
+        skeletonAvatarProps={{ className: "rounded-md" }}
+        loading={loading}
+        pagingData={tableData}
+        onPaginationChange={onPaginationChange}
+        onSelectChange={onSelectChange}
+        onSort={onSort}
+      />{" "}
+      {/* <ProductDeleteConfirmation /> */}{" "}
+    </>
+  );
+};
+
+export default CustomerTable;

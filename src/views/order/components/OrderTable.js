@@ -65,7 +65,6 @@ const ActionColumn = ({ row }) => {
     //     navigate(`/delivery-order/detail/${row.id}`);
     // };
     const onDetail = () => {
-        console.log('------onDetail has work-----', row._id)
         navigate(`/delivery-order/detail`, {
             state: {
             //   store_name: row.name,
@@ -108,13 +107,12 @@ const ProductColumn = ({ row }) => {
     );
 };
 
-const OrderTable = ({ status }) => {
+const OrderTable = ({ state }) => {
     const tableRef = useRef(null);
 
     const dispatch = useDispatch();
 
-    const { pageIndex, pageSize, sort, query, total } =
-    useSelector(selectTableData);
+    const { pageIndex, pageSize, sort, query, total } = useSelector(selectTableData);
     // const filterData = useSelector(
     //     (state) => state.salesProductList.data.filterData
     // )
@@ -126,7 +124,7 @@ const OrderTable = ({ status }) => {
     useEffect(() => {
         fetchData();
         // eslint-disable-next-line
-    }, [pageIndex, pageSize, status]);
+    }, [pageIndex, pageSize, state.status]);
     // pageIndex, pageSize, sort
     useEffect(() => {
         if (tableRef) {
@@ -143,7 +141,8 @@ const OrderTable = ({ status }) => {
         const params = {
             offset: pageIndex * pageSize - pageSize,
             limit: pageSize,
-            status: status,
+            status: state.status,
+            store_id: state.store_id
         };
         // const offset = pageIndex*pageSize - pageSize
         // const limit = pageSize
@@ -160,6 +159,11 @@ const OrderTable = ({ status }) => {
             {
                 header: "Số điện thoại",
                 accessorKey: "cust_phone",
+                sortable: true,
+            },
+            {
+                header: "Mã vận đơn",
+                accessorKey: "order_code",
                 sortable: true,
             },
             {
@@ -244,7 +248,7 @@ const OrderTable = ({ status }) => {
     };
 
     return ( 
-        <>
+        <> 
             <
             DataTable ref = { tableRef }
             columns = { columns }

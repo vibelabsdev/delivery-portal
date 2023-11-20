@@ -5,6 +5,7 @@ import base from './base'
 import locale from './locale/localeSlice'
 import store from './delivery_store/storeSlice'
 import order from './delivery_order/orderSlice'
+import customer from './delivery_customer/customerSlice'
 import dashboardState from './delivery_dashboard/dashboardStateSlice'
 import dashboard from './delivery_dashboard/dashboardSlice'
 import role from './role/roleSlice'
@@ -17,6 +18,7 @@ const rootReducer = (asyncReducers) => (state, action) => {
         locale,
         store,
         order,
+        customer,
         dashboardState,
         dashboard,
         role,

@@ -1,27 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Input, Button, FormItem, FormContainer, Radio, Select, Alert } from 'components/ui'
-import { Field, Form, Formik, FieldArray, getIn } from 'formik'
+import { Field, Form, Formik, FieldArray, getIn,useFormikContext } from 'formik'
 import * as Yup from 'yup'
+import type { FieldProps } from 'formik'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { HiMinus } from 'react-icons/hi'
-import {useRef} from 'react';
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import { actionCreateOrder } from 'actions/order.actions';
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { actionGetUserByPhone } from 'actions/customer.action'
+
 
 
 const options = [
-    { value: 'store', label: 'Store' },
-
+    { value: '6558f60ea41e1a28ef2d83ab', label: 'customer two' },
+    { value: '6553b099e61059e4f605b2f2', label: 'customer one' },
+    { value: 'bar', label: 'Bar' },
 ]
 
 const validationSchema = Yup.object().shape({
     cust_name: Yup.string().required('Họ và Tên không được bỏ trống!'),
-    cust_phone: Yup.string().required('Số điện thoại không được bỏ trống!'),
+    // cust_phone: Yup.string().required('Số điện thoại không được bỏ trống!'),
     address: Yup.string().required('Địa chỉ không được bỏ trống!'),
     order_type: Yup.string().required('Chọn loại giao hàng!'),
+    cust_phone: Yup.string().required('Please select one!'),
 
     // fee_ship: Yup.number().required('Nhập phí giao hàng!'),
     products: Yup.array().of(
@@ -55,11 +59,38 @@ const OrderForm = ({state}) => {
     // const refFeeship = useRef();
     const [message, setMessage] = useTimeOutMessage()
 
-    const { store_name, store_id, store_code, name } = state; // Read values passed on state
+    const { store_name, store_id, store_code, name, phone_data, store_data } = state; // Read values passed on state
     const notify = () => toast("tạo đơn thành công!");
 
     const [ totalAmount, setTotalAmount ] = useState(0)
     const [ feeShip, setFeeShip ] = useState(0)
+    const [ customers, setCustomers ] = useState([])
+    // const { setFieldValue } = useFormikContext();
+    const [ phone, setPhone ] = useState('')
+
+    useEffect(() => {
+
+        if(phone_data && store_data) {
+            const dataReq = {
+                phone: phone_data,
+                store_id: store_data,
+            }
+            actionGetUserByPhone(dataReq).then(response => {
+                
+                const newCustomer = response?.data?.customers.map(obj => ({
+                    [`value`]: obj.phone,
+                    [`label`]: obj.phone,
+                    [`address`]: obj.address,
+                    [`name`]: obj.name,
+                    [`_id`]: obj._id,
+                  }));
+                  
+                setCustomers(newCustomer)
+                
+            })
+        }
+    }, [])
+    
 
     const handleChangeProd = (index, products) => {
         
@@ -73,8 +104,6 @@ const OrderForm = ({state}) => {
             })
             setTotalAmount(totalPrice)
         }
-
-
     }
     const handleChangeFeeShip = (event) => {
         // refFeeship.current.value = event.target.value
@@ -85,15 +114,56 @@ const OrderForm = ({state}) => {
     }   
 
     const total = parseFloat(totalAmount) + parseFloat(feeShip)
+
+    const handleChangePhoneNumber = (newValue) => {
+        const inputValue = newValue.replace(/\W/g, '')
+
+        if(inputValue.length >= 6) {
+            const dataReq = {
+                phone: inputValue,
+                store_id: store_id,
+            }
+            actionGetUserByPhone(dataReq).then(response => {
+                
+                const newArrayObjects = response?.data?.customers.map(obj => ({
+                    [`value`]: obj.phone,
+                    [`label`]: obj.phone,
+                    [`address`]: obj.address,
+                    [`name`]: obj.name,
+                    [`_id`]: obj._id,
+                  }));
+                  
+                setCustomers(newArrayObjects)
+                
+                if(newArrayObjects.length === 0 && inputValue.length == 10 ) {
+                    setPhone(inputValue)
+                }
+            })
+            
+        }
+        
+    }
+
+    const handleCreateCustomer = () => {
+        navigate(   
+            '/delivery-customer/create',
+            {
+                state: {
+                  phone: phone,
+                },
+            }
+        )
+    }
     
     return (
         <>
         <Formik
             initialValues={{
                 cust_name: '',
-                cust_phone: '',
+                // cust_phone: '',
                 address: '',
                 name: name,
+                cust_phone: '',
                 
                 store_code: store_code,
                 products: [],
@@ -110,7 +180,6 @@ const OrderForm = ({state}) => {
                 }else {
                     setTimeout(() => {
                         
-
                         const dataReq = {
                             cust_name: values.cust_name,
                             cust_phone: values.cust_phone,
@@ -118,7 +187,7 @@ const OrderForm = ({state}) => {
                             user_id: store_id,
     
                             address: values.address,
-                            store_code: store_code,
+                            store_code: store_code, 
                             product_list: values.products,
                             total_amount: parseFloat(totalAmount),
     
@@ -126,19 +195,20 @@ const OrderForm = ({state}) => {
                             order_type: values.order_type,
                             extract: {},
                             status: "wait",
+                            customer_id: values.cust_id,
                         }
-        
-                        actionCreateOrder(dataReq)
+
+                        actionCreateOrder(dataReq).then(() => {
+                            navigate(   
+                                '/delivery-order/wait'
+                            )
+                        })
                         
                         // .then (() => {
                         //     notify();
 
                         // })
 
-                        navigate(   
-                            '/delivery-order/wait'
-                        )
-    
                         setSubmitting(false)
                         resetForm()
                     }, 400)
@@ -146,13 +216,84 @@ const OrderForm = ({state}) => {
                 
             }}
         >
-            {({ values, resetForm, touched, errors, isSubmitting }) => {
+            {({ values, resetForm, touched, errors, isSubmitting, setFieldValue }) => {
                 const products = values.products
                 return (
                     <Form>
                         <FormContainer>
                             <div className='grid grid-cols-2 gap-4'>
                                 <div>
+                                    {/* <FormItem
+                                        label="Số điện thoại"
+                                        invalid={errors.cust_phone && touched.cust_phone}
+                                        errorMessage={errors.cust_phone}
+                                    >
+                                        <Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="cust_phone"
+                                            placeholder="Vui lòng nhập Số điện thoại"
+                                            component={Input}
+                                        />
+                                    </FormItem> */}
+                                    <div className='flex flex-row'>
+                                        <FormItem
+                                            asterisk
+                                            label="Số điện thoại"
+                                            invalid={errors.cust_phone && touched.cust_phone}
+                                            errorMessage={errors.cust_phone}
+                                            className='w-full'
+                                        >
+                                            
+                                                <Field name="cust_phone">
+                                                    {({ field, form }: FieldProps<FormModel>) => (
+                                                        <Select
+                                                            field={field}
+                                                            form={form}
+                                                            options={customers}
+                                                            value={customers.filter(
+                                                                (option) =>
+                                                                    option.value ===
+                                                                    values.cust_phone
+                                                            )}
+                                                            onInputChange={
+                                                                handleChangePhoneNumber
+                                                                } 
+                                                            onChange={(option) => {
+                                                                setFieldValue('cust_id', option._id)
+                                                                setFieldValue('cust_name', option.name)
+                                                                setFieldValue('address', option.address.street + ' ' + option.address.ward + ' ' + option.address.district + ' ' + option.address.city)
+                                                                setFieldValue('isDisabled', true);
+                                                                form.setFieldValue(
+                                                                    field.name,
+                                                                    option?.value
+                                                                    )
+                                                                }
+                                                            }
+                                                        />
+                                                    )}
+                                                </Field>
+                                                
+                                        </FormItem>
+                                        <div className={ customers.length > 0 ? `hidden` : `justify-center items-center flex ml-[32px]`}>
+                                            <a 
+                                                className='cursor-pointer h-[42px] w-auto px-[20px] flex items-center bg-blue-500 text-white rounded-md' 
+                                                onClick={handleCreateCustomer}
+                                            >
+                                                Thêm
+                                            </a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className='hidden'>
+                                        <Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="cust_id"
+                                            component={Input}
+                                            disabled
+                                        />
+                                    </div>
                                     <FormItem
                                         label="Họ và Tên"
                                         invalid={errors.cust_name && touched.cust_name}
@@ -164,19 +305,7 @@ const OrderForm = ({state}) => {
                                             name="cust_name"
                                             placeholder="Vui lòng nhập Họ và Tên"
                                             component={Input}
-                                        />
-                                    </FormItem>
-                                    <FormItem
-                                        label="Số điện thoại"
-                                        invalid={errors.cust_phone && touched.cust_phone}
-                                        errorMessage={errors.cust_phone}
-                                    >
-                                        <Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="cust_phone"
-                                            placeholder="Vui lòng nhập Số điện thoại"
-                                            component={Input}
+                                            disabled={values.isDisabled}
                                         />
                                     </FormItem>
                                     
@@ -191,6 +320,7 @@ const OrderForm = ({state}) => {
                                             name="address"
                                             placeholder="Vui lòng nhập địa chỉ"
                                             component={Input}
+                                            disabled={values.isDisabled}
                                         />
                                     </FormItem>
                                 </div>

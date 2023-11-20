@@ -106,6 +106,16 @@ const navigationConfig = [{
             },
         ],
     },
+    {
+        key: "delivery_customer",
+        path: "/delivery-customer",
+        title: "Danh Sách Khách Hàng",
+        translateKey: "nav.delivery_customer",
+        icon: "collapseMenu",
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: [STORE],
+        subMenu: [],
+    },
    
 ];
 
