@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Input, Button, FormItem, FormContainer, Radio, Select, Alert } from 'components/ui'
+import { Input, Button, FormItem, FormContainer, Radio, Select, Alert, DatePicker } from 'components/ui'
 import { Field, Form, Formik, FieldArray, getIn,useFormikContext } from 'formik'
 import * as Yup from 'yup'
 import type { FieldProps } from 'formik'
@@ -26,7 +26,7 @@ const validationSchema = Yup.object().shape({
     address: Yup.string().required('Địa chỉ không được bỏ trống!'),
     order_type: Yup.string().required('Chọn loại giao hàng!'),
     cust_phone: Yup.string().required('Please select one!'),
-
+    delivery_date: Yup.date().min(new Date(), 'Ngày phải lớn hơn hoặc bằng ngày hiện tại'),
     // fee_ship: Yup.number().required('Nhập phí giao hàng!'),
     products: Yup.array().of(
         Yup.object().shape({
@@ -154,6 +154,26 @@ const OrderForm = ({state}) => {
             }
         )
     }
+
+    function formatDate(date) {
+
+        if(date === undefined) {
+            var date = new Date()
+        }
+        
+        var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+    
+        return [year, month, day].join('-');
+        
+    }
     
     return (
         <>
@@ -168,6 +188,7 @@ const OrderForm = ({state}) => {
                 store_code: store_code,
                 products: [],
                 order_type: ''
+                // delivery_date: new Date()
             }}
             enableReinitialize
             validationSchema={validationSchema}
@@ -190,7 +211,8 @@ const OrderForm = ({state}) => {
                             store_code: store_code, 
                             product_list: values.products,
                             total_amount: parseFloat(totalAmount),
-    
+                            
+                            delivery_date: formatDate(values.delivery_date),
                             fee_ship: parseFloat(feeShip),
                             order_type: values.order_type,
                             extract: {},
@@ -474,6 +496,29 @@ const OrderForm = ({state}) => {
                             </Form>
                             
                             <div className='w-[50%]'>
+                                <FormItem
+                                    
+                                    label="Ngày giao hàng"
+                                    invalid={errors.delivery_date && touched.delivery_date}
+                                    errorMessage={errors.delivery_date}
+                                >
+                                    <Field name="delivery_date" placeholder="Ngày giao hàng">
+                                        {({ field, form }: FieldProps<FormModel>) => (
+                                            <DatePicker
+                                                field={field}
+                                                form={form}
+                                                value={values.delivery_date}
+                                                minDate={new Date()}
+                                                onChange={(date) => {
+                                                    form.setFieldValue(
+                                                        field.name,
+                                                        date
+                                                    )
+                                                }}
+                                            />
+                                        )}
+                                    </Field>
+                                </FormItem>
                                 <FormItem
                                     label="Phí giao hàng"
                                     // invalid={errors.fee_ship && touched.fee_ship}

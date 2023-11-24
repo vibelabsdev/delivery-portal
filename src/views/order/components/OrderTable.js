@@ -167,6 +167,19 @@ const OrderTable = ({ state }) => {
                 sortable: true,
             },
             {
+                header: "Ngày giao",
+                accessorKey: "delivery_date",
+                cell: (props) => {
+                    const { delivery_date } = props.row.original;
+                    const formattedDateTime = format(
+                        new Date(delivery_date * 1000),
+                        "dd/MM/yyyy HH:mm:ss"
+                    );
+                    return <span > { formattedDateTime } </span>;
+                },
+                sortable: true,
+            },
+            {
                 header: "Phí giao hàng",
                 accessorKey: "fee_ship",
                 cell: (props) => {
