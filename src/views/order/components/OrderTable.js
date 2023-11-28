@@ -54,6 +54,11 @@ const inventoryStatusColor = {
         dotClass: "bg-gray-500",
         textClass: "text-gray-500",
     },
+    wait_confirm: {
+        label: "chờ lấy",
+        dotClass: "bg-orange-500",
+        textClass: "text-orange-500",
+    },
 };
 
 const ActionColumn = ({ row }) => {
@@ -199,7 +204,11 @@ const OrderTable = ({ state }) => {
                 },
                 sortable: true,
             },
-
+            {
+                header: "Ghi chú",
+                accessorKey: "order_desc",
+                sortable: true,
+            },
             {
                 header: "Địa chỉ",
                 accessorKey: "address",

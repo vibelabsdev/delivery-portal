@@ -17,6 +17,10 @@ import { actionGetOrderDetail } from 'actions/order.actions'
 import { OrderPrint } from './order-print';
 
 const paymentStatus = {
+    wait_confirm: {
+        label: "chờ lấy",
+        class: 'bg-orange-500 text-white dark:bg-emerald-500/20 dark:text-emerald-100',
+    },
     wait: {
         label: 'Chờ giao',
         class: 'bg-blue-500 text-white dark:bg-emerald-500/20 dark:text-emerald-100',

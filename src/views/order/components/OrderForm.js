@@ -11,6 +11,7 @@ import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import { actionCreateOrder } from 'actions/order.actions';
 import { useLocation, useNavigate } from 'react-router-dom'
 import { actionGetUserByPhone } from 'actions/customer.action'
+import { m } from 'framer-motion'
 
 
 
@@ -187,8 +188,9 @@ const OrderForm = ({state}) => {
                 
                 store_code: store_code,
                 products: [],
-                order_type: ''
+                order_type: '',
                 // delivery_date: new Date()
+                order_desc: ''
             }}
             enableReinitialize
             validationSchema={validationSchema}
@@ -216,10 +218,12 @@ const OrderForm = ({state}) => {
                             fee_ship: parseFloat(feeShip),
                             order_type: values.order_type,
                             extract: {},
-                            status: "wait",
+                            status: "wait_confirm",
                             customer_id: values.cust_id,
+                            order_desc: values.order_desc
                         }
 
+                        console.log('----data Req ----', dataReq)
                         actionCreateOrder(dataReq).then(() => {
                             navigate(   
                                 '/delivery-order/wait'
@@ -532,6 +536,22 @@ const OrderForm = ({state}) => {
                                         component={Input}
                                         onChange={handleChangeFeeShip}
                                     />
+                                </FormItem>
+
+                                <FormItem
+                                    label="Ghi chú"
+                                >
+                                    
+                                    <Field
+                                        className="border border-[#d1d5db] rounded"
+                                        component="textarea"
+                                        rows="4"
+                                        cols="70"
+                                        id="order_desc"
+                                        name="order_desc"                                    
+                                        fullWidth
+                                    />
+                                    
                                 </FormItem>
 
                                 <div className='mb-[24px] flex flex-col gap-y-3'>
