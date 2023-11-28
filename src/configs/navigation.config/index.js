@@ -34,7 +34,18 @@ const navigationConfig = [{
         icon: "collapseMenu",
         type: NAV_ITEM_TYPE_COLLAPSE,
         authority: [],
-        subMenu: [{
+        subMenu: [
+            {
+                key: "collapseMenu.item8",
+                path: "/delivery-order/wait_confirm",
+                title: "Collapse menu item 8",
+                translateKey: "nav.collapseMenu.item8",
+                icon: "",
+                type: NAV_ITEM_TYPE_ITEM,
+                authority: [],
+                subMenu: [],
+            },
+            {
                 key: "collapseMenu.item1",
                 path: "/delivery-order/wait",
                 title: "Collapse menu item 1",
