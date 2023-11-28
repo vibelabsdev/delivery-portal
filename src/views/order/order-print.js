@@ -22,10 +22,15 @@ export const OrderPrint = React.forwardRef(({data}, ref) => {
     }
 
     const handleConvertDate = (time_value) => {
-        return format(
-            new Date(time_value * 1000),
-            "dd/MM/yyyy HH:mm:ss"
-        )
+        if(time_value) {
+            return format(
+                new Date(time_value * 1000),
+                "dd/MM/yyyy HH:mm:ss"
+            )
+        }else {
+            return ''
+        }
+        
     }
     
     return (

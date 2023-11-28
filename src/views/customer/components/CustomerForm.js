@@ -77,7 +77,7 @@ const CustomerForm = ({state}) => {
                     
                     actionCreateCustomer(dataReq)
                     .then (() => {
-                        console.log('-----customer phone ----', customer_phone)
+
                         navigate('/delivery-order/create', {
                                 state: {
                                     phone_data: customer_phone,
