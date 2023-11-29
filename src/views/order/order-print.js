@@ -51,7 +51,6 @@ export const OrderPrint = React.forwardRef(({data}, ref) => {
             <div className='flex flex-col '>
                 <p>Tên cửa hàng: {data.store_name}</p>
                 <p>SDT cửa hàng: {data.store_phone}</p>
-                <p>Tên cửa hàng: {data.store_name}</p>
                 <p>Tên Khách hàng: {data.cust_name}</p>
                 <p>Số điện thoại: {data.cust_phone}</p>
                 <p>Địa chỉ: {data.address}</p>
@@ -59,6 +58,7 @@ export const OrderPrint = React.forwardRef(({data}, ref) => {
             </div>
             <div className='flex flex-col'>
                 <p>Ngày tạo đơn: {handleConvertDate(data.created_time)}</p>
+                <p>Ngày giao: {handleConvertDate(data.delivery_date)}</p>
                 <p>Tiền hàng: {FormatPrice(data.total_amount - data.fee_ship)}</p>
                 <p>Phí ship: {FormatPrice(data.fee_ship)}</p>
                 <p>Tổng: {FormatPrice(data.total_amount)}</p>
