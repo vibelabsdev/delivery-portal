@@ -16,7 +16,7 @@ const validationSchema = Yup.object().shape({
     ward: Yup.string().required('Địa chỉ không được bỏ trống!'),
     district: Yup.string().required('Địa chỉ không được bỏ trống!'),
     city: Yup.string().required('Địa chỉ không được bỏ trống!'),
-    birthday: Yup.date().required('Date Required!').nullable(),
+    // birthday: Yup.date().required('Date Required!').nullable(),
     radio: Yup.string().required('Please select one!'),
 })
 
@@ -26,11 +26,12 @@ const CustomerForm = ({state}) => {
     const navigate = useNavigate()
 
     function formatDate(date) {
+        
         var d = new Date(date),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
-    
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
         if (month.length < 2) 
             month = '0' + month;
         if (day.length < 2) 
@@ -192,7 +193,7 @@ const CustomerForm = ({state}) => {
                                 </div>
                             </FormItem>
                             <FormItem
-                                asterisk
+                                // asterisk
                                 label="Ngày sinh"
                                 invalid={errors.date && touched.date}
                                 errorMessage={errors.date}
