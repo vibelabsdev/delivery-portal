@@ -36,6 +36,16 @@ const navigationConfig = [{
         authority: [],
         subMenu: [
             {
+                key: "collapseMenu.item9",
+                path: "/delivery-order/all",
+                title: "Collapse menu item 8",
+                translateKey: "nav.collapseMenu.item9",
+                icon: "",
+                type: NAV_ITEM_TYPE_ITEM,
+                authority: [],
+                subMenu: [],
+            },
+            {
                 key: "collapseMenu.item8",
                 path: "/delivery-order/wait_confirm",
                 title: "Collapse menu item 8",
