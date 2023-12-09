@@ -38,7 +38,7 @@ const navigationConfig = [{
             {
                 key: "collapseMenu.item9",
                 path: "/delivery-order/all",
-                title: "Collapse menu item 8",
+                title: "Collapse menu item 9",
                 translateKey: "nav.collapseMenu.item9",
                 icon: "",
                 type: NAV_ITEM_TYPE_ITEM,
