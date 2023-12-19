@@ -9,6 +9,8 @@ import { fetchListOrderByStatus } from 'actions/order.actions'
 import { Field, Form, Formik } from 'formik'
 import { Input, Button, FormItem, FormContainer, Radio, Select, Alert } from 'components/ui'
 import jwt from 'jwt-decode'
+// import { useHistory } from 'react-router-dom';
+
 
 const OrderTableSearch = () => {
     const dispatch = useDispatch()
@@ -17,8 +19,12 @@ const OrderTableSearch = () => {
     );
 
     const token = localStorage.getItem('accessToken')
+    const token_jwt = jwt(token)?.payload
 
-    const store_id = jwt(token)?.payload.store_id;
+    // const {store_id} = jwt(token)?.payload.store_id;
+    const {store_id, store_code } = token_jwt
+
+    // const history = useHistory();
 
     return (
         
@@ -38,19 +44,40 @@ const OrderTableSearch = () => {
                     if( store_id != 1) {
                         params['store_id'] = store_id
                     }
-                    console.log(search_value.includes('-'))
-                    if(search_value.includes('-')){
+
+                    if(search_value.length < 10 && search_value.length > 0){
+                        const _orderCode = store_code + '-' + search_value
+
+                        if(_orderCode) {
+                            params['order_code'] = _orderCode.replace('#','')
+                        }else {
+                            params['order_code'] = search_value
+                        }
+                        // if(search_value.includes('#')) {
+                        //     params['order_code'] = search_value.replace('#','')
+                        // }else {
+                        //     params['order_code'] = search_value
+                        // }
+
+                        localStorage.setItem('storageDataFilter', params['order_code'])
+                    }
+                    else if (search_value.includes('-')){
                         if(search_value.includes('#')) {
                             params['order_code'] = search_value.replace('#','')
                         }else {
                             params['order_code'] = search_value
                         }
                         
+                        localStorage.setItem('storageDataFilter', params['order_code'])
                     }
-                    if(search_value.indexOf('0') == 0) {
+                    else if(search_value.indexOf('0') == 0 && search_value.length >= 10) {
                         params['cust_phone'] = search_value
+                        localStorage.setItem('storageDataFilter', params['cust_phone'] )
                     }
-
+                    else {
+                        localStorage.removeItem('storageDataFilter')
+                    }
+                    
                     dispatch(fetchListOrderByStatus(params));
                 }}
             >

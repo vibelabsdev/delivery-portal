@@ -138,7 +138,8 @@ const OrderTable = ({ state }) => {
     }, [filterData]);
 
     const tableData = useMemo(
-        () => ({ pageIndex, pageSize, sort, query, total }), [pageIndex, pageSize, sort, query, total]
+        () => ({ pageIndex, pageSize, sort, query, total }), 
+        [pageIndex, pageSize, sort, query, total]
     );
 
     console.log(total);
@@ -147,7 +148,8 @@ const OrderTable = ({ state }) => {
             offset: pageIndex * pageSize - pageSize,
             limit: pageSize,
             status: state.status,
-            store_id: state.store_id
+            store_id: state.store_id,
+            cust_phone: localStorage.getItem('storageDataFilter')? localStorage.getItem('storageDataFilter') : null
         };
         // const offset = pageIndex*pageSize - pageSize
         // const limit = pageSize
@@ -272,19 +274,20 @@ const OrderTable = ({ state }) => {
     return ( 
         <> 
             <
-            DataTable ref = { tableRef }
-            columns = { columns }
-            data = { data }
-            skeletonAvatarColumns = {
-                [0] }
-            skeletonAvatarProps = {
-                { className: "rounded-md" } }
-            loading = { loading }
-            pagingData = { tableData }
-            onPaginationChange = { onPaginationChange }
-            onSelectChange = { onSelectChange }
-            onSort = { onSort }
-            />{" "} { /* <ProductDeleteConfirmation /> */ } { " " } 
+                DataTable ref = { tableRef }
+                columns = { columns }
+                data = { data }
+                skeletonAvatarColumns = {
+                    [0] }
+                skeletonAvatarProps = {
+                    { className: "rounded-md" } }
+                loading = { loading }
+                pagingData = { tableData }
+                onPaginationChange = { onPaginationChange }
+                onSelectChange = { onSelectChange }
+                onSort = { onSort }
+            />
+            
         </>
     );
 };
