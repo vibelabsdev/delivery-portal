@@ -8,6 +8,14 @@ const FormatPrice = (price) => {
     return 0
 }
 
+const SumPrice = (price, fee) => {
+    if(price,  fee) {
+        let _sum = price + fee
+        return _sum.toLocaleString()
+    }  
+    return 0
+}
+
 export const OrderPrint = React.forwardRef(({data}, ref) => {
 
     const orderTypeConvert = {
@@ -59,9 +67,9 @@ export const OrderPrint = React.forwardRef(({data}, ref) => {
             <div className='flex flex-col'>
                 <p>Ngày tạo đơn: {handleConvertDate(data.created_time)}</p>
                 <p>Ngày giao: {handleConvertDate(data.delivery_date)}</p>
-                <p>Tiền hàng: {FormatPrice(data.total_amount - data.fee_ship)}</p>
+                <p>Tiền hàng: {FormatPrice(data.total_amount)}</p>
                 <p>Phí ship: {FormatPrice(data.fee_ship)}</p>
-                <p>Tổng: {FormatPrice(data.total_amount)}</p>
+                <p>Tổng: {SumPrice(data.total_amount, data.fee_ship)}</p>
                 <p>Loại giao: {orderTypeConvert[data.order_type]?.label}</p>
             </div>
         </div>

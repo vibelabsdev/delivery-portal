@@ -9,6 +9,14 @@ const FormatPrice = (price) => {
     return 0
 }
 
+const SumPrice = (price, fee) => {
+    if(price,  fee) {
+        let _sum = price + fee
+        return _sum.toLocaleString()
+    }  
+    return 0
+}
+
 
 const PaymentInfo = ({ label, value, isLast }) => {
     return (
@@ -31,6 +39,7 @@ const PaymentInfo = ({ label, value, isLast }) => {
 }
 
 const PaymentSummary = ({ data }) => {
+
     return (
         <Card className="mb-4">
             <h5 className="mb-4">Thanh Toán</h5>
@@ -38,7 +47,7 @@ const PaymentSummary = ({ data }) => {
                 
                 <div className='flex flex-row justify-between'>
                     <p>Tiền hàng: </p>
-                    <span className='right'>{FormatPrice(data.total_amount - data.fee_ship)}</span>
+                    <span className='right'>{FormatPrice(data.total_amount)}</span>
                 </div>
 
                 <div className='flex flex-row justify-between'>
@@ -50,7 +59,7 @@ const PaymentSummary = ({ data }) => {
                 
                 <div className='flex flex-row justify-between'>
                     <p>Tổng cộng: </p>
-                    <span className='right'>{FormatPrice(data.total_amount)}</span>
+                    <span className='right'>{SumPrice(data.total_amount, data.fee_ship)}</span>
                 </div>
             </ul>
             
