@@ -90,9 +90,9 @@ const ActionColumn = ({ row }) => {
                 onClick = { onDetail } 
             >
             < HiOutlinePencil />
-            </span>{" "} <span className = "cursor-pointer p-2 hover:text-red-500"
+            {/* </span>{" "} <span className = "cursor-pointer p-2 hover:text-red-500"
                 onClick = { onDelete } >
-            <HiOutlineTrash />
+            <HiOutlineTrash /> */}
             </span>{" "} 
         </div>
     );
