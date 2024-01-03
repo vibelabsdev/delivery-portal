@@ -4,6 +4,11 @@ import { OrderService } from "services/order.service";
 export const fetchListOrderByStatus = createAsyncThunk(
   "order/listOrderByStatus",
   async (params) => {
+
+    if(params.status === 'all') {
+      params['status'] = null
+    }
+  
     const response = await OrderService.getListOrderByStatus({
       params,
     });
